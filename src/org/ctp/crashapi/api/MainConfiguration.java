@@ -24,6 +24,7 @@ public class MainConfiguration extends Configuration {
 		YamlConfigBackup config = getConfig();
 
 		config.addDefault("use_comments", true);
+		config.addDefault("get_latest_version", true);
 		config.addDefault("language", Language.US.getLocale());
 		config.addDefault("language_file", "language.yml");
 		config.addEnum("language", Language.getValues());

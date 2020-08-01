@@ -46,6 +46,7 @@ public class CrashAPI extends CrashAPIPlugin {
 				config.getConfig().getBoolean("get_latest_version"), false);
 		Bukkit.getPluginManager().registerEvents(check, this);
 		checkVersion();
+		initializing = false;
 	}
 	
 	private void checkVersion(){
