@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.ctp.crashapi.CrashAPI;
 import org.ctp.crashapi.config.*;
 import org.ctp.crashapi.db.BackupDB;
@@ -42,8 +41,6 @@ public class Configurations implements CrashConfigurations {
 		if (!languages.exists()) languages.mkdirs();
 
 		LANGUAGE_FILES.add(new APILanguageFile(dataFolder, Language.US));
-		LANGUAGE_FILES.add(new APILanguageFile(dataFolder, Language.GERMAN));
-		LANGUAGE_FILES.add(new APILanguageFile(dataFolder, Language.CHINA_SIMPLE));
 
 		for(CrashLanguageFile file: LANGUAGE_FILES)
 			if (file.getLanguage() == lang) LANGUAGE = new LanguageConfiguration(dataFolder, languageFile, file, db);
@@ -51,14 +48,6 @@ public class Configurations implements CrashConfigurations {
 		if (LANGUAGE == null) LANGUAGE = new LanguageConfiguration(dataFolder, languageFile, LANGUAGE_FILES.get(0), db);
 
 		save();
-	}
-	
-	public void setLanguageDefaults() {
-		for (APILanguageFile l : LANGUAGE_FILES) {
-			LanguageThread thread = new LanguageThread(l);
-			int scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(CrashAPI.getPlugin(), thread, 1l, 1l);
-			thread.setScheduler(scheduler);
-		}
 	}
 
 	public void revert() {

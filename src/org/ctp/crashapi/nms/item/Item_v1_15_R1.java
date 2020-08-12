@@ -9,11 +9,6 @@ import net.minecraft.server.v1_15_R1.EntityThrownTrident;
 
 public class Item_v1_15_R1 {
 
-	public static String returnLocalizedItemName(ItemStack item) {
-		net.minecraft.server.v1_15_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
-		return nmsItem.getName().getText();
-	}
-
 	public static ItemStack getTrident(Trident trident) {
 		EntityThrownTrident t = ((CraftTrident) trident).getHandle();
 		net.minecraft.server.v1_15_R1.ItemStack a = t.trident;

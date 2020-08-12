@@ -34,6 +34,13 @@ public enum ItemSlotType {
 			return null;
 	}
 
+	public final static ItemSlotType getTypeFromSlot(int slot) {
+		int modifiedSlot = slot - 32;
+		for(ItemSlotType value: values())
+			if (value.getSlot() == modifiedSlot) return value;
+		return null;
+	}
+
 	public int getSlot() {
 		return slot;
 	}

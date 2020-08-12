@@ -7,6 +7,7 @@ import org.ctp.crashapi.config.yaml.YamlConfig;
 import org.ctp.crashapi.db.BackupDB;
 import org.ctp.crashapi.item.ItemSerialization;
 import org.ctp.crashapi.listeners.EquipListener;
+import org.ctp.crashapi.listeners.ItemEnterInventoryListener;
 import org.ctp.crashapi.utils.ChatUtils;
 import org.ctp.crashapi.version.*;
 import org.ctp.crashapi.version.Version.VersionType;
@@ -39,10 +40,10 @@ public class CrashAPI extends CrashAPIPlugin {
 	@Override
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(new EquipListener(), this);
-		config.setLanguageDefaults();
+		getServer().getPluginManager().registerEvents(new ItemEnterInventoryListener(), this);
 		
 		check = new VersionCheck(pluginVersion, "https://raw.githubusercontent.com/crashtheparty/CrashAPI/master/VersionHistory", 
-				"", "https://github.com/crashtheparty/CrashAPI", 
+				"https://www.spigotmc.org/resources/crashapi.82229/", "https://github.com/crashtheparty/CrashAPI", 
 				config.getConfig().getBoolean("get_latest_version"), false);
 		Bukkit.getPluginManager().registerEvents(check, this);
 		checkVersion();

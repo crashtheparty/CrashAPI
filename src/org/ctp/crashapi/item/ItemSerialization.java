@@ -1,11 +1,14 @@
 package org.ctp.crashapi.item;
 
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 
 import org.bukkit.*;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -18,48 +21,44 @@ public class ItemSerialization {
 
 	private static List<ItemSerialization> serial = new ArrayList<ItemSerialization>();
 	private final CrashAPIPlugin plugin;
-	
+
 	public static ItemSerialization getItemSerial(CrashAPIPlugin plugin) {
-		for (ItemSerialization s : serial)
+		for(ItemSerialization s: serial)
 			if (s.getPlugin().getName().equals(plugin.getName())) return s;
 		ItemSerialization s = new ItemSerialization(plugin);
 		serial.add(s);
 		return s;
 	}
-	
+
 	private ItemSerialization(CrashAPIPlugin plugin) {
 		this.plugin = plugin;
 	}
-	
+
 	public CrashAPIPlugin getPlugin() {
 		return plugin;
 	}
-	
+
 	public String itemToString(ItemStack item) {
-		String itemString = "";
-		if (item.getType() != null) itemString = itemString + "name@" + item.getType();
-		itemString = itemString + " amount@" + item.getAmount();
-		if (MatData.isAir(item.getType())) return itemString;
-		if (item.getItemMeta().getDisplayName() != null && !item.getItemMeta().getDisplayName().equals("")) itemString = itemString + " item_name@" + item.getItemMeta().getDisplayName().replace(" ", "_").replace("§", "&");
-		if (item.getItemMeta() instanceof Damageable) {
-			Damageable damage = (Damageable) item.getItemMeta();
-			if (damage.hasDamage()) itemString = itemString + " damage@" + damage.getDamage();
+		Reader configReader = new StringReader("");
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(configReader);
+
+		c.set("item", item);
+		return c.saveToString();
+	}
+
+	public ItemStack stringToItem(String itemString) {
+		Reader configReader = new StringReader("");
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(configReader);
+		try {
+			c.loadFromString(itemString);
+		} catch (InvalidConfigurationException e) {
+			return stringToItemLegacy(itemString);
 		}
-		Map<Enchantment, Integer> isEnch = item.getEnchantments();
-		if (isEnch.size() > 0) for(Map.Entry<Enchantment, Integer> ench: isEnch.entrySet())
-			itemString = itemString + " enchant@" + ench.getKey().getKey().getNamespace() + "+" + ench.getKey().getKey().getKey() + "@" + ench.getValue();
-
-		List<String> isLore = item.getItemMeta().getLore();
-		if (item.getItemMeta().getLore() != null && isLore.size() != 0) for(String lore: isLore)
-			itemString = itemString + " lore@" + lore.replace(" ", "_").replace("§", "&");
-
-		if (item.getType().equals(Material.PLAYER_HEAD)) itemString = itemString + " owner@" + ((SkullMeta) item.getItemMeta()).getOwningPlayer();
-
-		return itemString;
+		return c.getItemStack("item");
 	}
 
 	@SuppressWarnings("deprecation")
-	public ItemStack stringToItem(String itemString) {
+	public ItemStack stringToItemLegacy(String itemString) {
 		ItemStack is = null;
 		Boolean createdItemStack = Boolean.valueOf(false);
 
@@ -110,20 +109,20 @@ public class ItemSerialization {
 	}
 
 	public String itemToData(ItemStack item) {
-		String metadata = itemToString(item);
-		String[] serializedItem = metadata.split(" ");
-		for(String itemInfo: serializedItem) {
-			String[] itemAttribute = itemInfo.split("@");
-			if (itemAttribute[0].equals("name") || itemAttribute[0].equals("amount")) {
-				metadata = metadata.replace(itemInfo + " ", "");
-				metadata = metadata.replace(itemInfo, "");
-			}
+		String itemString = itemToString(item);
+		if (itemString.contains("amount: ")) {
+			String sub = itemString.substring(itemString.indexOf("amount: "));
+			String replace = sub.substring(0, sub.indexOf('\n'));
+			itemString = itemString.replace(replace, "");
 		}
-
-		return metadata.trim();
+		return itemString;
 	}
 
 	public ItemStack dataToItem(Material material, int amount, String metadata) {
-		return stringToItem("name@" + material + " amount@" + amount + " " + metadata);
+		if (metadata.contains("item:")) {
+			if (amount > 1) metadata += "\n  amount: " + amount;
+			return stringToItem(metadata);
+		}
+		return stringToItemLegacy("name@" + material + " amount@" + amount + " " + metadata);
 	}
 }
