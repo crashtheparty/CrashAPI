@@ -1061,6 +1061,7 @@ mobs:
     phantom: 'Phantom'
     pig: 'Pig'
     piglin: 'Piglin'
+    piglin_brute: 'Piglin Brute'
     pillager: 'Pillager'
     polar_bear: 'Polar Bear'
     pufferfish: 'Pufferfish'

@@ -1,6 +1,8 @@
 package org.ctp.crashapi.utils;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -47,13 +49,13 @@ public class ItemUtils {
 		} else if (item.getAmount() > 0) fallbackClone.getWorld().dropItemNaturally(fallbackClone, item);
 		if (addedAmount > 0 && statistic) player.incrementStatistic(Statistic.PICKUP, item.getType(), addedAmount);
 	}
-	
+
 	private static int addItems(Player player, ItemStack item, HandMethod method, boolean empty) {
 		int addedAmount = 0;
 		for(int i = 0; i < 36; i++) {
 			ItemStack prevItem = null;
 			if (player.getInventory().getItem(i) != null) prevItem = player.getInventory().getItem(i).clone();
-			
+
 			if (empty && (prevItem == null || MatData.isAir(prevItem.getType())) || !empty && prevItem != null && prevItem.isSimilar(item)) {
 				Event event = null;
 				ItemStack finalItem = player.getInventory().getItem(i);
@@ -93,11 +95,23 @@ public class ItemUtils {
 			location.getWorld().dropItemNaturally(location, item);
 	}
 
+	public static Item spawnItem(ItemStack item, Location loc) {
+		Location location = loc.clone();
+		return location.getWorld().dropItemNaturally(location, item);
+	}
+
 	public static boolean checkItemType(ItemData item, CustomItemType type) {
 		if (type.getVanilla() == VanillaItemType.VANILLA) {
 			MatData data = new MatData(type.getType().split(":")[1]);
 			return data.hasMaterial() && data.getMaterial() == item.getMaterial();
 		}
 		return MMOUtils.check(item, type);
+	}
+
+	public static List<Item> itemStacksToItems(List<ItemStack> items, Location loc) {
+		Item[] array = new Item[items.size()];
+		for(int i = 0; i < items.size(); i++)
+			array[i] = spawnItem(items.get(i), loc);
+		return Arrays.asList(array);
 	}
 }

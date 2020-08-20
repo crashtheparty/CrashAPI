@@ -223,7 +223,7 @@ public class Advancement {
 			Object obj = parser.parse(reader);
 			reader.close();
 
-			JsonObject gson = new JsonParser().parse(((JSONObject) obj).toJSONString()).getAsJsonObject();
+			JsonObject gson = new JsonParser().parse(new String(((JSONObject) obj).toJSONString().getBytes(), "UTF-8")).getAsJsonObject();
 
 			return gson;
 		} catch (Exception e) {
