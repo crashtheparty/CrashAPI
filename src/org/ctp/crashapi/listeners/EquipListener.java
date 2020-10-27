@@ -4,8 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.*;
+import org.bukkit.event.Event;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockDispenseArmorEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
@@ -411,25 +413,6 @@ public class EquipListener implements Listener {
 
 			if (event.isCancelled()) e.setCancelled(true);
 		}
-	}
-
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onItemHeldHandEquip(PlayerItemHeldEvent e) {
-		Player player = e.getPlayer();
-
-		int prev = e.getPreviousSlot();
-		int next = e.getNewSlot();
-
-		ItemStack newItem = player.getInventory().getItem(next);
-		ItemStack oldItem = player.getInventory().getItem(prev);
-
-		if (newItem == null && oldItem == null) return;
-
-		ItemEquipEvent event = new ItemEquipEvent(player, ItemEquipEvent.HandMethod.HELD_SWAP, ItemSlotType.MAIN_HAND, oldItem, newItem);
-
-		Bukkit.getServer().getPluginManager().callEvent(event);
-
-		if (event.isCancelled()) e.setCancelled(true);
 	}
 
 	@EventHandler

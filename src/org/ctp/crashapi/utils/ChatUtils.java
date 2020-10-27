@@ -137,7 +137,7 @@ public class ChatUtils {
 			messages.add(config.getString(location));
 		}
 		for(int i = 0; i < messages.size(); i++)
-			if (messages.get(i) != null) messages.set(i, translateCodes(codes, ChatColor.translateAlternateColorCodes('&', messages.get(i))));
+			if (messages.get(i) != null) messages.set(i, getMessage(messages.get(i), codes));
 		if (messages.size() == 0) messages.add(location + " must be a list or a string.");
 		return messages;
 	}

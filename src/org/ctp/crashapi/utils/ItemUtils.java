@@ -80,14 +80,14 @@ public class ItemUtils {
 		return addedAmount;
 	}
 
-	public static void dropItems(Collection<ItemStack> drops, Location loc) {
+	public static void dropItems(Collection<ItemStack> drops, Location loc, boolean natural) {
 		for(ItemStack drop: drops)
-			dropItem(drop, loc);
+			dropItem(drop, loc, natural);
 	}
 
-	public static void dropItem(ItemStack item, Location loc) {
+	public static void dropItem(ItemStack item, Location loc, boolean natural) {
 		Location location = loc.clone();
-		if (!Configurations.getConfigurations().getConfig().getBoolean("drop_items_naturally")) {
+		if (!natural) {
 			Item droppedItem = location.getWorld().dropItem(location, item);
 			droppedItem.setVelocity(new Vector(0, 0, 0));
 			droppedItem.teleport(location);

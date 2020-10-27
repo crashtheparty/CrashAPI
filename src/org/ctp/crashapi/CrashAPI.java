@@ -1,6 +1,7 @@
 package org.ctp.crashapi;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.ctp.crashapi.api.Configurations;
 import org.ctp.crashapi.api.CrashBackup;
 import org.ctp.crashapi.config.yaml.YamlConfig;
@@ -12,6 +13,8 @@ import org.ctp.crashapi.utils.ChatUtils;
 import org.ctp.crashapi.version.*;
 import org.ctp.crashapi.version.Version.VersionType;
 
+import net.milkbowl.vault.economy.Economy;
+
 public class CrashAPI extends CrashAPIPlugin {
 
 	private static CrashAPI PLUGIN;
@@ -21,6 +24,9 @@ public class CrashAPI extends CrashAPIPlugin {
 	private BukkitVersion bukkitVersion;
 	private PluginVersion pluginVersion;
 	private VersionCheck check;
+	public static int MAX_VERSION = 14;
+	private static Economy ECON;
+	private static Boolean VAULT;
 	
 	@Override
 	public void onLoad() {
@@ -99,6 +105,22 @@ public class CrashAPI extends CrashAPIPlugin {
 
 	public BackupDB getBackupDB() {
 		return BACKUP;
+	}
+	
+	public static boolean hasEconomy() {
+		if(VAULT == null) {
+			if(!Bukkit.getPluginManager().isPluginEnabled("Vault")) return false;
+			RegisteredServiceProvider<Economy> rsp = Bukkit.getServer()
+					.getServicesManager().getRegistration(Economy.class);
+			if (rsp == null) return false;
+			ECON = rsp.getProvider();
+			VAULT = ECON != null;
+		}
+		return VAULT;
+	}
+	
+	public static Economy getEconomy() {
+		return ECON;
 	}
 	
 }

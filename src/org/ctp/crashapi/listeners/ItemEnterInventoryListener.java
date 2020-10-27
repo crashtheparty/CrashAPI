@@ -14,9 +14,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
-import org.ctp.crashapi.events.ArmorEquipEvent;
+import org.ctp.crashapi.CrashAPI;
 import org.ctp.crashapi.events.ItemAddEvent;
-import org.ctp.crashapi.events.ItemEquipEvent;
 import org.ctp.crashapi.item.MatData;
 
 public class ItemEnterInventoryListener implements Listener {
@@ -29,32 +28,17 @@ public class ItemEnterInventoryListener implements Listener {
 			Item item = event.getItem();
 			ItemAddEvent itemAdd = new ItemAddEvent(player, item.getItemStack());
 			Bukkit.getPluginManager().callEvent(itemAdd);
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onItemEquip(ItemEquipEvent event) {
-		if (event.getNewItem() != null) {
-			Player player = event.getPlayer();
-			ItemAddEvent itemAdd = new ItemAddEvent(player, event.getNewItem());
-			Bukkit.getPluginManager().callEvent(itemAdd);
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onArmorEquip(ArmorEquipEvent event) {
-		if (event.getNewArmorPiece() != null) {
-			Player player = event.getPlayer();
-			ItemAddEvent itemAdd = new ItemAddEvent(player, event.getNewArmorPiece());
-			Bukkit.getPluginManager().callEvent(itemAdd);
+			event.getItem().setItemStack(itemAdd.getItem());
+			Bukkit.getScheduler().runTaskLater(CrashAPI.getPlugin(), () -> {
+				event.getItem().setItemStack(itemAdd.getItem());
+			}, 0l);
 		}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		for(int i = 0; i < 36; i++) {
-			if (player.getInventory().getHeldItemSlot() == i) continue; // already gotten from ItemEquipEvent
+		for(int i = 0; i < player.getInventory().getSize(); i++) {
 			ItemStack item = player.getInventory().getItem(i);
 			if (item == null || MatData.isAir(item.getType())) continue;
 			ItemAddEvent itemAdd = new ItemAddEvent(player, item);
