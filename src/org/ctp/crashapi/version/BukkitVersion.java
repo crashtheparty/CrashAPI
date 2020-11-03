@@ -70,7 +70,11 @@ public class BukkitVersion {
 		// BukkitVersion
 		chat.sendInfo("Checking Bukkit Version: " + version);
 
-		versionNumber = getBukkitVersionsFromFile("BukkitVersions").get(version);
+		try{
+			versionNumber = getBukkitVersionsFromFile("BukkitVersions").get(version);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		if (versionNumber > CrashAPI.MAX_VERSION) chat.sendSevere("This version is not explicitly defined!");
 		else if (versionNumber > 0) {
 			chat.sendInfo("Found version " + version + ". Setting version number to " + versionNumber + ".");
@@ -81,7 +85,11 @@ public class BukkitVersion {
 		// BukkitApiVersion
 		chat.sendInfo("Checking Bukkit API Version: " + apiVersion);
 
-		versionNumber = getBukkitVersionsFromFile("BukkitAPIVersions").get(version);
+		try{
+			versionNumber = getBukkitVersionsFromFile("BukkitAPIVersions").get(version);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		if (versionNumber > CrashAPI.MAX_VERSION) {
 			chat.sendSevere("This version is not defined! Features that require NMS have been disabled, and issues may arise with certain features. " + "Please wait for an update for this version.");
 			return false;

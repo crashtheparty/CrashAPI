@@ -26,7 +26,10 @@ public class MobNMS {
 			case 12:
 				return Mob_v1_16_R1.getCatType(entity);
 			case 13:
+			case 14:
 				return Mob_v1_16_R2.getCatType(entity);
+			case 15:
+				return Mob_v1_16_R3.getCatType(entity);
 		}
 		return "";
 	}

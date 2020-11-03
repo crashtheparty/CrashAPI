@@ -4,10 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
+import org.bukkit.event.*;
 import org.bukkit.event.Event.Result;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockDispenseArmorEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
@@ -29,7 +27,7 @@ import org.ctp.crashapi.utils.DamageUtils;
  */
 public class EquipListener implements Listener {
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInventoryClickArmor(final InventoryClickEvent e) {
 		boolean shift = false, numberkey = false;
 		if (e.isCancelled()) return;
@@ -77,7 +75,7 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerInteractArmor(PlayerInteractEvent e) {
 		if (e.getAction() == Action.PHYSICAL) return;
 		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -97,7 +95,7 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoinArmor(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		for(ItemStack item: player.getInventory().getArmorContents()) {
@@ -106,7 +104,7 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInventoryDragArmor(InventoryDragEvent event) {
 		ItemSlotType type = ItemSlotType.matchArmorType(event.getOldCursor());
 		if (event.getRawSlots().isEmpty()) return;// Idk if this will ever happen
@@ -120,7 +118,7 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onItemBreakArmor(PlayerItemBreakEvent e) {
 		ItemSlotType type = ItemSlotType.matchArmorType(e.getBrokenItem());
 		if (type != null) {
@@ -139,21 +137,21 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerDeathArmor(PlayerDeathEvent e) {
 		Player p = e.getEntity();
 		for(ItemStack i: p.getInventory().getArmorContents())
 			if (!isAirOrNull(i)) Bukkit.getServer().getPluginManager().callEvent(new ArmorEquipEvent(p, EquipMethod.DEATH, ItemSlotType.matchArmorType(i), i, null));
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerRespawnArmor(PlayerRespawnEvent e) {
 		Player p = e.getPlayer();
 		for(ItemStack i: p.getInventory().getArmorContents())
 			if (!isAirOrNull(i)) Bukkit.getServer().getPluginManager().callEvent(new ArmorEquipEvent(p, EquipMethod.DEATH, ItemSlotType.matchArmorType(i), null, i));
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onDispenseArmor(BlockDispenseArmorEvent event) {
 		ItemSlotType type = ItemSlotType.matchArmorType(event.getItem());
 		if (type != null) if (event.getTargetEntity() instanceof Player) {
@@ -164,7 +162,7 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInventoryClickHandEquip(InventoryClickEvent e) {
 		boolean shift = false, numberkey = false, dropping = false;
 
@@ -300,7 +298,7 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onCraftItemHandEquip(CraftItemEvent e) {
 		if (e.isCancelled()) return;
 
@@ -336,7 +334,15 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onPlayerItemHeldEvent(PlayerItemHeldEvent event) {
+		Player player = event.getPlayer();
+		ItemStack mainHand = player.getInventory().getItem(event.getNewSlot());
+		ItemEquipEvent e = new ItemEquipEvent(event.getPlayer(), ItemEquipEvent.HandMethod.JOIN, ItemSlotType.MAIN_HAND, null, mainHand);
+		Bukkit.getServer().getPluginManager().callEvent(e);
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerJoinHand(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		ItemStack mainHand = player.getInventory().getItemInMainHand();
@@ -348,7 +354,7 @@ public class EquipListener implements Listener {
 		Bukkit.getServer().getPluginManager().callEvent(e);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onSwitchOffHandEquip(PlayerSwapHandItemsEvent e) {
 		if (e.isCancelled()) return;
 
@@ -374,17 +380,17 @@ public class EquipListener implements Listener {
 		if (offhand.isCancelled()) e.setCancelled(true);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerDropItemHandEquip(PlayerDropItemEvent e) {
 		// TODO - might not have to check this, let's see
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerConsumeHandEquip(PlayerItemConsumeEvent e) {
 		// TODO - shouldn't matter for ES currently
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInventoryPickupHandEquip(EntityPickupItemEvent e) {
 		if (e.isCancelled() || e.getItem() == null || e.getItem().getItemStack() == null || MatData.isAir(e.getItem().getItemStack().getType())) return;
 
@@ -415,7 +421,7 @@ public class EquipListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onItemBreakHandEquip(PlayerItemBreakEvent e) {
 		Player player = e.getPlayer();
 
@@ -427,7 +433,7 @@ public class EquipListener implements Listener {
 		Bukkit.getServer().getPluginManager().callEvent(event);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerDeathHandEquip(PlayerDeathEvent e) {
 		Player p = e.getEntity();
 
@@ -435,7 +441,7 @@ public class EquipListener implements Listener {
 		Bukkit.getServer().getPluginManager().callEvent(new ItemEquipEvent(p, ItemEquipEvent.HandMethod.DEATH, ItemSlotType.OFF_HAND, p.getInventory().getItemInOffHand(), null));
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerRespawnHandEquip(PlayerRespawnEvent event) {
 		Player player = event.getPlayer();
 

@@ -72,22 +72,22 @@ public class DamageUtils {
 		return new DamageUtils(item).getDamage() >= getMaxDamage(item);
 	}
 
-	public static int damageItem(HumanEntity player, ItemStack item) {
+	public static DamageResult damageItem(HumanEntity player, ItemStack item) {
 		return damageItem(player, item, 1.0D, 1.0D, true);
 	}
 
-	public static int damageItem(HumanEntity player, ItemStack item, double damage) {
+	public static DamageResult damageItem(HumanEntity player, ItemStack item, double damage) {
 		return damageItem(player, item, damage, 1.0D, true);
 	}
 
-	public static int damageItem(HumanEntity player, ItemStack item, double damage, double extraChance) {
+	public static DamageResult damageItem(HumanEntity player, ItemStack item, double damage, double extraChance) {
 		return damageItem(player, item, damage, extraChance, true);
 	}
 
-	public static int damageItem(HumanEntity player, ItemStack item, double damage, double extraChance,
+	public static DamageResult damageItem(HumanEntity player, ItemStack item, double damage, double extraChance,
 	boolean breakItem) {
 		if (item == null) throw new NullPointerException("The ES dev let you damage a null item, huh? Cool, but you shouldn't be doing that.");
-		if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR) || !DamageUtils.isDamageable(item)) return 0;
+		if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR) || !DamageUtils.isDamageable(item)) return new DamageResult(false, 0, DamageUtils.getDamage(item), DamageUtils.getDamage(item), DamageUtils.getMaxDamage(item));
 		int originalDamage = DamageUtils.getDamage(item);
 		int numBreaks = 0;
 		int unbreaking = item.getItemMeta().getEnchantLevel(Enchantment.DURABILITY);
@@ -96,13 +96,14 @@ public class DamageUtils {
 			double random = Math.random();
 			if (chance > random) numBreaks++;
 		}
+		ItemStack clone = item.clone();
 
 		if (numBreaks > 0) {
 			if (breakItem) {
 				if (player instanceof Player) {
 					PlayerItemDamageEvent event = new PlayerItemDamageEvent((Player) player, item, numBreaks);
 					Bukkit.getPluginManager().callEvent(event);
-					if (event.isCancelled()) return 0;
+					if (event.isCancelled()) return new DamageResult(false, 0, DamageUtils.getDamage(item), DamageUtils.getDamage(item), DamageUtils.getMaxDamage(item));
 					numBreaks = event.getDamage();
 				}
 				DamageUtils.setDamage(item, DamageUtils.getDamage(item) + numBreaks);
@@ -117,11 +118,11 @@ public class DamageUtils {
 						Player p = (Player) player;
 						p.incrementStatistic(Statistic.BREAK_ITEM, item.getType());
 					}
-					return DamageUtils.getMaxDamage(item) - originalDamage;
-				} else if (item.getType() == Material.ELYTRA) return DamageUtils.getMaxDamage(item) - originalDamage;
+					return new DamageResult(true, DamageUtils.getMaxDamage(clone) - originalDamage, DamageUtils.getDamage(clone), DamageUtils.getDamage(item), DamageUtils.getMaxDamage(clone));
+				} else if (item.getType() == Material.ELYTRA) return new DamageResult(true, DamageUtils.getMaxDamage(clone) - originalDamage, DamageUtils.getDamage(clone), DamageUtils.getDamage(item), DamageUtils.getMaxDamage(clone));
 			}
-			return numBreaks;
+			return new DamageResult(false, numBreaks, DamageUtils.getDamage(clone), DamageUtils.getDamage(item), DamageUtils.getMaxDamage(clone));
 		}
-		return 0;
+		return new DamageResult(false, 0, DamageUtils.getDamage(item), DamageUtils.getDamage(item), DamageUtils.getMaxDamage(item));
 	}
 }

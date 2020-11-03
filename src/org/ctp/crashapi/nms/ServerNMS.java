@@ -30,7 +30,11 @@ public class ServerNMS {
 				tick = net.minecraft.server.v1_16_R1.MinecraftServer.currentTick;
 				break;
 			case 13:
+			case 14:
 				tick = net.minecraft.server.v1_16_R2.MinecraftServer.currentTick;
+				break;
+			case 15:
+				tick = net.minecraft.server.v1_16_R3.MinecraftServer.currentTick;
 				break;
 		}
 		return tick - Integer.MIN_VALUE;
