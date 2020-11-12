@@ -8,7 +8,7 @@ import org.ctp.crashapi.config.yaml.YamlConfigBackup;
 import org.ctp.crashapi.db.tables.BackupTable;
 import org.ctp.crashapi.db.tables.Table;
 
-public abstract class BackupDB extends SQLite{
+public abstract class BackupDB extends SQLite {
 
 	public BackupDB(CrashAPIPlugin instance, String dbname) {
 		super(instance, dbname);

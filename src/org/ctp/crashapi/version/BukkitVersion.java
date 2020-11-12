@@ -70,7 +70,7 @@ public class BukkitVersion {
 		// BukkitVersion
 		chat.sendInfo("Checking Bukkit Version: " + version);
 
-		try{
+		try {
 			versionNumber = getBukkitVersionsFromFile("BukkitVersions").get(version);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -85,7 +85,7 @@ public class BukkitVersion {
 		// BukkitApiVersion
 		chat.sendInfo("Checking Bukkit API Version: " + apiVersion);
 
-		try{
+		try {
 			versionNumber = getBukkitVersionsFromFile("BukkitAPIVersions").get(version);
 		} catch (Exception ex) {
 			ex.printStackTrace();

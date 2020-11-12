@@ -11,6 +11,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.Vector;
 import org.ctp.crashapi.api.Configurations;
 import org.ctp.crashapi.compatibility.MMOUtils;
@@ -38,8 +39,7 @@ public class ItemUtils {
 
 	public static void giveItemToPlayer(Player player, ItemStack item, Location fallback, boolean statistic, HandMethod method) {
 		int addedAmount = 0;
-		addedAmount += addItems(player, item, method, false);
-		if (item.getAmount() > 0) addedAmount += addItems(player, item, method, true);
+		addedAmount += addItems(player, item, method);
 		Location fallbackClone = fallback.clone();
 		boolean dropNaturally = Configurations.getConfigurations().getConfig().getBoolean("drop_items_naturally");
 		if (item.getAmount() > 0 && !dropNaturally) {
@@ -50,43 +50,91 @@ public class ItemUtils {
 		if (addedAmount > 0 && statistic) player.incrementStatistic(Statistic.PICKUP, item.getType(), addedAmount);
 	}
 
-	private static int addItems(Player player, ItemStack item, HandMethod method, boolean empty) {
-		int addedAmount = 0;
-		for(int i = 0; i < 36; i++) {
-			ItemStack prevItem = null;
-			if (player.getInventory().getItem(i) != null) prevItem = player.getInventory().getItem(i).clone();
+	private static int addItems(Player player, ItemStack item, HandMethod method) {
+		int prevAmount = item.getAmount();
+		int fullAmount = item.getAmount();
+		PlayerInventory inv = player.getInventory();
+		int maxStack = item.getType().getMaxStackSize();
+		int partial = 0, empty = 0;
+		while (true) {
+			partial = firstPartial(inv, item, partial);
+			if (partial == -1) {
+				empty = firstEmpty(inv, empty);
 
-			if (empty && (prevItem == null || MatData.isAir(prevItem.getType())) || !empty && prevItem != null && prevItem.isSimilar(item)) {
-				Event event = null;
-				ItemStack finalItem = player.getInventory().getItem(i);
-				if (finalItem == null || MatData.isAir(finalItem.getType())) {
-					finalItem = item.clone();
-					addedAmount += item.getAmount();
-					item.setAmount(0);
-					player.getInventory().setItem(i, finalItem);
-				} else {
-					int amount = Math.min(prevItem.getType().getMaxStackSize(), prevItem.getAmount() + item.getAmount());
-					int leftover = prevItem.getAmount() + item.getAmount() - amount;
-					addedAmount += item.getAmount() - amount;
-					item.setAmount(leftover);
-					finalItem.setAmount(amount);
+				if (empty == -1) break;
+				else {
+					ItemStack newStack = item.clone();
+					if (prevAmount > maxStack) {
+						newStack.setAmount(maxStack);
+						inv.setItem(empty, newStack);
+						callItemEvent(player, empty, method, null, newStack);
+						prevAmount -= maxStack;
+					} else {
+						newStack.setAmount(prevAmount);
+						inv.setItem(empty, newStack);
+						callItemEvent(player, empty, method, null, newStack);
+						prevAmount = 0;
+						break;
+					}
 				}
-				if (i == player.getInventory().getHeldItemSlot()) event = new ItemEquipEvent(player, method, ItemSlotType.MAIN_HAND, prevItem, finalItem);
-				else
-					event = new ItemAddEvent(player, finalItem);
-				Bukkit.getPluginManager().callEvent(event);
+			} else {
+				ItemStack partialItem = inv.getItem(partial);
+				ItemStack currentItem = partialItem.clone();
+				int partialAmount = partialItem.getAmount();
+
+				if (prevAmount + partialAmount <= maxStack) {
+					currentItem.setAmount(prevAmount + partialAmount);
+					inv.setItem(partial, currentItem);
+					callItemEvent(player, partial, method, partialItem, currentItem);
+					prevAmount = 0;
+					break;
+				}
+				currentItem.setAmount(maxStack);
+				inv.setItem(partial, currentItem);
+				callItemEvent(player, partial, method, partialItem, currentItem);
+				prevAmount = prevAmount + partialAmount - maxStack;
 			}
 		}
-		return addedAmount;
+		item.setAmount(prevAmount);
+		return fullAmount - prevAmount;
 	}
 
-	public static void dropItems(Collection<ItemStack> drops, Location loc, boolean natural) {
+	private static int firstPartial(PlayerInventory inv, ItemStack item, int from) {
+		ItemStack[] inventory = inv.getStorageContents();
+		if (item == null) return -1;
+		for(int i = from; i < inventory.length; i++) {
+			ItemStack cItem = inventory[i];
+			if (cItem != null && cItem.getAmount() < cItem.getMaxStackSize() && cItem.isSimilar(item)) return i;
+		}
+		return -1;
+	}
+
+	private static int firstEmpty(PlayerInventory inv, int from) {
+		if (from == 0) return inv.firstEmpty();
+		ItemStack[] inventory = inv.getStorageContents();
+		for(int i = from; i < inventory.length; i++) {
+			ItemStack cItem = inventory[i];
+			if (cItem == null || MatData.isAir(cItem.getType())) return i;
+		}
+		return -1;
+	}
+
+	private static void callItemEvent(Player player, int slot, HandMethod method, ItemStack prev, ItemStack current) {
+		Event event = null;
+		if (slot == player.getInventory().getHeldItemSlot()) event = new ItemEquipEvent(player, method, ItemSlotType.MAIN_HAND, prev, current);
+		else
+			event = new ItemAddEvent(player, current);
+		Bukkit.getPluginManager().callEvent(event);
+	}
+
+	public static void dropItems(Collection<ItemStack> drops, Location loc) {
 		for(ItemStack drop: drops)
-			dropItem(drop, loc, natural);
+			dropItem(drop, loc);
 	}
 
-	public static void dropItem(ItemStack item, Location loc, boolean natural) {
+	public static void dropItem(ItemStack item, Location loc) {
 		Location location = loc.clone();
+		boolean natural = Configurations.getConfigurations().getConfig().getBoolean("drop_items_naturally");
 		if (!natural) {
 			Item droppedItem = location.getWorld().dropItem(location, item);
 			droppedItem.setVelocity(new Vector(0, 0, 0));

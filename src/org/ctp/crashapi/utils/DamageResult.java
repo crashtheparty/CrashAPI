@@ -4,7 +4,7 @@ public class DamageResult {
 
 	private final int damageAmount, oldDamage, newDamage, maxDamage;
 	private final boolean broken, damaged;
-	
+
 	public DamageResult(boolean broken, int damageAmount, int oldDamage, int newDamage, int maxDamage) {
 		this.broken = broken;
 		this.damageAmount = damageAmount;

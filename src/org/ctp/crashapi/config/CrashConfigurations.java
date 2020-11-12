@@ -8,7 +8,7 @@ public interface CrashConfigurations {
 	public void onEnable();
 
 	public void save();
-	
+
 	public static ItemStack getItemStack(Configurable config, String location) {
 		YamlConfiguration temp = YamlConfiguration.loadConfiguration(config.getFile());
 		return temp.getItemStack(location);

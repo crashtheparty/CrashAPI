@@ -18,7 +18,7 @@ public interface AnvilClickEventHandler {
 				event.setWillDestroy(false);
 				return;
 			}
-			if(event.getName().equals("")) {
+			if (event.getName().equals("")) {
 				event.setWillClose(false);
 				event.setWillDestroy(false);
 				return;

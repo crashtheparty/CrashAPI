@@ -28,7 +28,7 @@ import com.google.gson.JsonParser;
 public interface CrashRecipe {
 
 	public RecipeModificationResult activate(boolean reload);
-	
+
 	public RecipeModificationResult deactivate(boolean reload);
 
 	default RecipeModificationResult activate(boolean reload, NamespacedKey id, String json,

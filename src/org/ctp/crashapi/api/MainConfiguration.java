@@ -14,12 +14,12 @@ public class MainConfiguration extends Configuration {
 		super(CrashAPI.getPlugin(), new File(dataFolder + "/config.yml"), db, new String[] {});
 
 		migrateVersion();
-		if (getConfig() != null) getConfig().writeDefaults();
+		save();
 	}
 
 	@Override
 	public void setDefaults() {
-		if (getPlugin().isInitializing()) getPlugin().sendInfo("Loading main configuration...");
+		if (Configurations.isInitializing()) getPlugin().sendInfo("Initializing main configuration...");
 
 		YamlConfigBackup config = getConfig();
 
@@ -29,9 +29,9 @@ public class MainConfiguration extends Configuration {
 		config.addDefault("language_file", "language.yml");
 		config.addEnum("language", Language.getValues());
 
-		if (getPlugin().isInitializing()) getPlugin().sendInfo("Main configuration initialized!");
+		config.writeDefaults();
 
-		config.saveConfig();
+		if (Configurations.isInitializing()) getPlugin().sendInfo("Main configuration initialized!");
 	}
 
 	@Override

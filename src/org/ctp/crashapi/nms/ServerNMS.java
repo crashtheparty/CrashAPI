@@ -39,7 +39,7 @@ public class ServerNMS {
 		}
 		return tick - Integer.MIN_VALUE;
 	}
-	
+
 	public static boolean hasOverrun(long oldTick) {
 		return Math.abs(Math.abs(oldTick) - Math.abs(getCurrentTick())) > Integer.MAX_VALUE;
 	}

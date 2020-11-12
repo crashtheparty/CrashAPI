@@ -35,7 +35,7 @@ public class LocationUtils {
 		}
 		return false;
 	}
-	
+
 	public static boolean getIntersecting(Location loc1a, Location loc1b, Location loc2a, Location loc2b) {
 		return getIntersecting(loc1a, loc1b, loc2a, loc2b, false);
 	}
@@ -123,14 +123,14 @@ public class LocationUtils {
 		} else
 			block.getWorld().playSound(block.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
 	}
-	
+
 	public static boolean chunkShouldLoad(Location loc) {
-		if(loc.getWorld().isChunkForceLoaded(loc.getBlockX() / 16, loc.getBlockZ() / 16)) return true;
-		for(Player player : Bukkit.getOnlinePlayers()) {
+		if (loc.getWorld().isChunkForceLoaded(loc.getBlockX() / 16, loc.getBlockZ() / 16)) return true;
+		for(Player player: Bukkit.getOnlinePlayers()) {
 			int blocks = Bukkit.getViewDistance() * 16;
 			Location locOne = new Location(loc.getWorld(), loc.getBlockX() - blocks, 0, loc.getBlockZ() - blocks);
 			Location locTwo = new Location(loc.getWorld(), loc.getBlockX() + blocks, 0, loc.getBlockZ() + blocks);
-			if(getIntersecting(locOne, locTwo, player.getLocation(), player.getLocation(), true)) return true;
+			if (getIntersecting(locOne, locTwo, player.getLocation(), player.getLocation(), true)) return true;
 		}
 		return false;
 	}

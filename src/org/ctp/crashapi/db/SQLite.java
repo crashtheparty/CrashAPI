@@ -22,7 +22,7 @@ public abstract class SQLite extends Database {
 		super(instance);
 		this.dbname = dbname;
 	}
-	
+
 	public void addTable(Table t) {
 		tables.add(t);
 	}
@@ -70,6 +70,6 @@ public abstract class SQLite extends Database {
 	}
 
 	public void updateConfig(YamlConfigBackup config) {
-		
+
 	}
 }

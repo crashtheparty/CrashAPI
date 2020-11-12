@@ -6,7 +6,7 @@ public class ItemSlot {
 
 	private final ItemStack item;
 	private final ItemSlotType type;
-	
+
 	public ItemSlot(ItemStack item, ItemSlotType type) {
 		this.item = item;
 		this.type = type;
@@ -19,5 +19,5 @@ public class ItemSlot {
 	public ItemSlotType getType() {
 		return type;
 	}
-	
+
 }

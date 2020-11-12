@@ -19,10 +19,6 @@ public abstract class Configuration implements Configurable, Revertable {
 	private final CrashAPIPlugin plugin;
 
 	public Configuration(CrashAPIPlugin plugin, File file, BackupDB backup, String[] header) {
-		this(plugin, file, backup, header, true);
-	}
-
-	public Configuration(CrashAPIPlugin plugin, File file, BackupDB backup, String[] header, boolean setDefault) {
 		this.plugin = plugin;
 		this.file = file;
 		this.backup = backup;
@@ -31,7 +27,6 @@ public abstract class Configuration implements Configurable, Revertable {
 
 			config = new YamlConfigBackup(file, header);
 			config.getFromConfig();
-			if (setDefault) setDefaults();
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}

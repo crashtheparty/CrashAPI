@@ -14,27 +14,27 @@ public class LanguageConfiguration extends Configuration {
 	private CrashLanguageFile language;
 
 	public LanguageConfiguration(File file, String languageFile, CrashLanguageFile language, BackupDB db) {
-		super(CrashAPI.getPlugin(), new File(file + "/" + languageFile), db, new String[] {}, false);
+		super(CrashAPI.getPlugin(), new File(file + "/" + languageFile), db, new String[] {});
 
 		this.language = language;
 
-		setDefaults();
 		migrateVersion();
 		save();
 	}
 
 	@Override
 	public void setDefaults() {
+		if (Configurations.isInitializing()) getPlugin().sendInfo("Initializing language configuration...");
 		YamlConfigBackup config = getConfig();
 		config.addDefault("starter", "&8[&dCrash API&8]");
 		config.copyDefaults(language.getConfig());
 
 		config.writeDefaults();
+		if (Configurations.isInitializing()) getPlugin().sendInfo("Language configuration initialized!");
 	}
 
 	@Override
-	public void migrateVersion() {
-	}
+	public void migrateVersion() {}
 
 	@Override
 	public void repairConfig() {}

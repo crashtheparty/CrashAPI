@@ -8,12 +8,12 @@ import org.ctp.crashapi.config.yaml.YamlConfig;
 import org.ctp.crashapi.utils.CrashConfigUtils;
 
 public class APILanguageFile extends CrashLanguageFile {
-	
+
 	public APILanguageFile(File dataFolder, Language language) {
 		super(dataFolder, language);
-		
+
 		YamlConfig config = getConfig();
-		
+
 		File tempFile = CrashConfigUtils.getTempFile(getClass(), "/resources/" + language.getLocale() + ".yml");
 		YamlConfig defaultConfig = new YamlConfig(tempFile, new String[] {});
 		defaultConfig.getFromConfig();

@@ -9,7 +9,8 @@ import org.ctp.crashapi.config.*;
 import org.ctp.crashapi.db.BackupDB;
 
 public class Configurations implements CrashConfigurations {
-	
+
+	private static boolean INITIALIZING = true;
 	private final static Configurations CONFIGURATIONS = new Configurations();
 	private MainConfiguration CONFIG;
 	private LanguageConfiguration LANGUAGE;
@@ -19,6 +20,7 @@ public class Configurations implements CrashConfigurations {
 	public static Configurations getConfigurations() {
 		return CONFIGURATIONS;
 	}
+
 	@Override
 	public void onEnable() {
 		File dataFolder = CrashAPI.getPlugin().getDataFolder();
@@ -31,7 +33,7 @@ public class Configurations implements CrashConfigurations {
 
 		BackupDB db = CrashAPI.getPlugin().getBackupDB();
 		CONFIG = new MainConfiguration(dataFolder, db);
-		
+
 		String languageFile = CONFIG.getString("language_file");
 		Language lang = Language.getLanguage(CONFIG.getString("language"));
 		if (!lang.getLocale().equals(CONFIG.getString("language"))) CONFIG.updatePath("language", lang.getLocale());
@@ -46,7 +48,7 @@ public class Configurations implements CrashConfigurations {
 			if (file.getLanguage() == lang) LANGUAGE = new LanguageConfiguration(dataFolder, languageFile, file, db);
 
 		if (LANGUAGE == null) LANGUAGE = new LanguageConfiguration(dataFolder, languageFile, LANGUAGE_FILES.get(0), db);
-
+		INITIALIZING = false;
 		save();
 	}
 
@@ -85,6 +87,10 @@ public class Configurations implements CrashConfigurations {
 
 	public List<APILanguageFile> getLanguageFiles() {
 		return LANGUAGE_FILES;
+	}
+
+	public static boolean isInitializing() {
+		return INITIALIZING;
 	}
 
 }

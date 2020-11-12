@@ -44,8 +44,6 @@ public abstract class CrashAPIPlugin extends JavaPlugin {
 	public static boolean getMMOItems() {
 		return MMO_ITEMS;
 	}
-	
-	public abstract boolean isInitializing();
 
 	public abstract PluginVersion getPluginVersion();
 }

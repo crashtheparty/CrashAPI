@@ -12,7 +12,7 @@ abstract class Database {
 	Database(CrashAPIPlugin instance) {
 		plugin = instance;
 	}
-	
+
 	public CrashAPIPlugin getInstance() {
 		return plugin;
 	}
@@ -20,7 +20,7 @@ abstract class Database {
 	public abstract Connection getSQLConnection();
 
 	public abstract void load();
-	
+
 	protected void initialize() {
 		initialize(null);
 	}

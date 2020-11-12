@@ -28,9 +28,9 @@ public interface Configurable {
 	public List<String> getStringList(String s);
 
 	public void updatePath(String s, Object value);
-	
+
 	public CrashAPIPlugin getPlugin();
-	
+
 	public ChatUtils getChat();
 
 	public void repairConfig();

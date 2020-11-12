@@ -14,28 +14,28 @@ public class CrashSmithingRecipe implements CrashRecipe {
 	private ItemStack item;
 	private NamespacedKey id;
 	private RecipeChoice.MaterialChoice base, add;
-	
+
 	public CrashSmithingRecipe(NamespacedKey id, ItemStack item, RecipeChoice.MaterialChoice base, RecipeChoice.MaterialChoice add) {
 		this.setID(id);
 		this.setItem(item);
 		this.setBase(base);
 		this.setAdd(add);
 	}
-	
+
 	@Override
 	public RecipeModificationResult activate(boolean reload) {
 		return activate(reload, id, toJson(), toJsonObject());
 	}
-	
+
 	@Override
 	public RecipeModificationResult deactivate(boolean reload) {
 		return deactivate(reload, id);
 	}
-	
+
 	@Override
 	public JsonObject toJsonObject() {
 		JsonObject json = new JsonObject();
-		
+
 		json.addProperty("type", "minecraft:smithing");
 
 		Validate.notNull(item, "A result must exist for recipe: " + id.toString());
@@ -43,10 +43,10 @@ public class CrashSmithingRecipe implements CrashRecipe {
 
 		Validate.notNull(base, "A base type must exist for recipe: " + id.toString());
 		json.add("base", new JsonBuilder().add("item", "minecraft:" + base.getItemStack().getType().name().toLowerCase()).build());
-		
+
 		Validate.notNull(add, "An addition type must exist for recipe: " + id.toString());
 		json.add("addition", new JsonBuilder().add("item", "minecraft:" + add.getItemStack().getType().name().toLowerCase()).build());
-		
+
 		return json;
 	}
 

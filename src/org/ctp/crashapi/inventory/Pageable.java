@@ -30,6 +30,6 @@ public interface Pageable {
 	public int getPage();
 
 	public void setPage(int page);
-	
+
 	public ChatUtils getChat();
 }

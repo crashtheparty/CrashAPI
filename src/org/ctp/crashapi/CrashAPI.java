@@ -19,7 +19,6 @@ public class CrashAPI extends CrashAPIPlugin {
 
 	private static CrashAPI PLUGIN;
 	private static CrashBackup BACKUP;
-	private boolean initializing = true;
 	private Configurations config;
 	private BukkitVersion bukkitVersion;
 	private PluginVersion pluginVersion;
@@ -27,7 +26,7 @@ public class CrashAPI extends CrashAPIPlugin {
 	public static int MAX_VERSION = 15;
 	private static Economy ECON;
 	private static Boolean VAULT;
-	
+
 	@Override
 	public void onLoad() {
 		PLUGIN = this;
@@ -35,31 +34,28 @@ public class CrashAPI extends CrashAPIPlugin {
 		pluginVersion = new PluginVersion(this, new Version(getDescription().getVersion(), VersionType.UNKNOWN));
 
 		if (!getDataFolder().exists()) getDataFolder().mkdirs();
-		
+
 		BACKUP = new CrashBackup(PLUGIN);
 		BACKUP.load();
-		
+
 		config = Configurations.getConfigurations();
 		config.onEnable();
 	}
-	
+
 	@Override
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(new EquipListener(), this);
 		getServer().getPluginManager().registerEvents(new ItemEnterInventoryListener(), this);
-		
-		check = new VersionCheck(pluginVersion, "https://raw.githubusercontent.com/crashtheparty/CrashAPI/master/VersionHistory", 
-				"https://www.spigotmc.org/resources/crashapi.82229/", "https://github.com/crashtheparty/CrashAPI", 
-				config.getConfig().getBoolean("get_latest_version"), false);
+
+		check = new VersionCheck(pluginVersion, "https://raw.githubusercontent.com/crashtheparty/CrashAPI/master/VersionHistory", "https://www.spigotmc.org/resources/crashapi.82229/", "https://github.com/crashtheparty/CrashAPI", config.getConfig().getBoolean("get_latest_version"), false);
 		Bukkit.getPluginManager().registerEvents(check, this);
 		checkVersion();
-		initializing = false;
 	}
-	
-	private void checkVersion(){
+
+	private void checkVersion() {
 		Bukkit.getScheduler().runTaskTimerAsynchronously(this, check, 20l, 20 * 60 * 60 * 4l);
-    }
-	
+	}
+
 	public static CrashAPI getPlugin() {
 		return PLUGIN;
 	}
@@ -72,7 +68,7 @@ public class CrashAPI extends CrashAPIPlugin {
 	public PluginVersion getPluginVersion() {
 		return pluginVersion;
 	}
-	
+
 	@Override
 	public String getStarter() {
 		return getLanguageFile().getString("starter");
@@ -98,29 +94,23 @@ public class CrashAPI extends CrashAPIPlugin {
 		return config.getLanguage().getConfig();
 	}
 
-	@Override
-	public boolean isInitializing() {
-		return initializing;
-	}
-
 	public BackupDB getBackupDB() {
 		return BACKUP;
 	}
-	
+
 	public static boolean hasEconomy() {
-		if(VAULT == null) {
-			if(!Bukkit.getPluginManager().isPluginEnabled("Vault")) return false;
-			RegisteredServiceProvider<Economy> rsp = Bukkit.getServer()
-					.getServicesManager().getRegistration(Economy.class);
+		if (VAULT == null) {
+			if (!Bukkit.getPluginManager().isPluginEnabled("Vault")) return false;
+			RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
 			if (rsp == null) return false;
 			ECON = rsp.getProvider();
 			VAULT = ECON != null;
 		}
 		return VAULT;
 	}
-	
+
 	public static Economy getEconomy() {
 		return ECON;
 	}
-	
+
 }

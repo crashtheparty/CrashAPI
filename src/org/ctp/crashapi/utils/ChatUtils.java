@@ -16,18 +16,18 @@ import org.ctp.crashapi.CrashAPIPlugin;
 import org.ctp.crashapi.config.yaml.YamlConfig;
 
 public class ChatUtils {
-	
+
 	private static List<ChatUtils> utils = new ArrayList<ChatUtils>();
 	private final CrashAPIPlugin plugin;
-	
+
 	public static ChatUtils getUtils(CrashAPIPlugin plugin) {
-		for (ChatUtils cu : utils)
+		for(ChatUtils cu: utils)
 			if (cu.getPlugin().getName().equals(plugin.getName())) return cu;
 		ChatUtils cu = new ChatUtils(plugin);
 		utils.add(cu);
 		return cu;
 	}
-	
+
 	private ChatUtils(CrashAPIPlugin plugin) {
 		this.plugin = plugin;
 	}

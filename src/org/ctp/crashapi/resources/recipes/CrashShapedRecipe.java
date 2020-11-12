@@ -24,18 +24,18 @@ public class CrashShapedRecipe implements CrashRecipe {
 	private NamespacedKey id;
 	private ItemStack result;
 	private String[] rows;
-    private Map<Character, RecipeChoice> ingredients = new HashMap<>();
-    
-    public CrashShapedRecipe(NamespacedKey id, ItemStack result) {
-    	this.id = id;
-    	this.result = result;
-    }
-	
+	private Map<Character, RecipeChoice> ingredients = new HashMap<>();
+
+	public CrashShapedRecipe(NamespacedKey id, ItemStack result) {
+		this.id = id;
+		this.result = result;
+	}
+
 	@Override
 	public RecipeModificationResult activate(boolean reload) {
 		return activate(reload, id, toJson(), toJsonObject());
 	}
-	
+
 	@Override
 	public RecipeModificationResult deactivate(boolean reload) {
 		return deactivate(reload, id);
@@ -65,31 +65,31 @@ public class CrashShapedRecipe implements CrashRecipe {
 		this.ingredients = newIngredients;
 	}
 
-    public void setIngredient(char key, RecipeChoice ingredient) {
-        Validate.isTrue(ingredients.containsKey(key), "Symbol does not appear in the shape:", key);
+	public void setIngredient(char key, RecipeChoice ingredient) {
+		Validate.isTrue(ingredients.containsKey(key), "Symbol does not appear in the shape:", key);
 
-        ingredients.put(key, ingredient);
-    }
+		ingredients.put(key, ingredient);
+	}
 
-    public Map<Character, RecipeChoice> getChoiceMap() {
-        Map<Character, RecipeChoice> result = new HashMap<>();
-        for (Map.Entry<Character, RecipeChoice> ingredient : ingredients.entrySet())
+	public Map<Character, RecipeChoice> getChoiceMap() {
+		Map<Character, RecipeChoice> result = new HashMap<>();
+		for(Map.Entry<Character, RecipeChoice> ingredient: ingredients.entrySet())
 			if (ingredient.getValue() == null) result.put(ingredient.getKey(), null);
 			else
 				result.put(ingredient.getKey(), ingredient.getValue().clone());
-        return result;
-    }
-	
+		return result;
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public JsonObject toJsonObject() {
 		JsonObject json = new JsonObject();
-		
+
 		json.addProperty("type", "minecraft:crafting_shaped");
 
 		Validate.notNull(result, "A result must exist for recipe: " + id.toString());
 		json.add("result", new JsonBuilder().add("item", "minecraft:" + result.getType().name().toLowerCase()).build());
-		
+
 		Validate.notNull(rows, "A pattern must exist for recipe: " + id.toString());
 		JSONArray parseRows;
 		try {
@@ -98,7 +98,7 @@ public class CrashShapedRecipe implements CrashRecipe {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		Validate.notNull(getChoiceMap(), "A key must exist for recipe: " + id.toString());
 		JsonObject key = new JsonObject();
 		Iterator<Entry<Character, RecipeChoice>> iter = getChoiceMap().entrySet().iterator();
@@ -108,7 +108,7 @@ public class CrashShapedRecipe implements CrashRecipe {
 			key.add(entry.getKey().toString(), new JsonBuilder().add("item", "minecraft:" + entry.getValue().getItemStack().getType().name().toLowerCase()).build());
 		}
 		json.add("key", key);
-		
+
 		return json;
 	}
 
