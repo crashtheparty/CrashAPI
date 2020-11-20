@@ -378,6 +378,7 @@ public class ItemType {
 				i.addAll(getEnchantables(IRON_HELMET.getType()));
 				i.addAll(getEnchantables(LEATHER_HELMET.getType()));
 				i.addAll(getEnchantables(NETHERITE_HELMET.getType()));
+				i.addAll(getEnchantables(TURTLE_HELMET.getType()));
 				break;
 			case "HOES":
 				i.addAll(getEnchantables(DIAMOND_HOE.getType()));

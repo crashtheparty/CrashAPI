@@ -38,6 +38,7 @@ public class ItemUtils {
 	}
 
 	public static void giveItemToPlayer(Player player, ItemStack item, Location fallback, boolean statistic, HandMethod method) {
+		if (MatData.isAir(item.getType()) || item.getAmount() == 0) return;
 		int addedAmount = 0;
 		addedAmount += addItems(player, item, method);
 		Location fallbackClone = fallback.clone();
@@ -101,7 +102,7 @@ public class ItemUtils {
 
 	private static int firstPartial(PlayerInventory inv, ItemStack item, int from) {
 		ItemStack[] inventory = inv.getStorageContents();
-		if (item == null) return -1;
+		if (item == null || from < 0) return -1;
 		for(int i = from; i < inventory.length; i++) {
 			ItemStack cItem = inventory[i];
 			if (cItem != null && cItem.getAmount() < cItem.getMaxStackSize() && cItem.isSimilar(item)) return i;
