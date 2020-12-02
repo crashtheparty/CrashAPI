@@ -20,7 +20,7 @@ public class DataFile implements Configurable {
 	private YamlConfig config;
 	private final CrashAPIPlugin plugin;
 
-	public DataFile(CrashAPIPlugin plugin, File dataFolder, String fileName, boolean extra) {
+	public DataFile(CrashAPIPlugin plugin, File dataFolder, String fileName, boolean extra, boolean load) {
 		this.plugin = plugin;
 		file = extra ? new File(dataFolder + "/extras/" + fileName) : new File(dataFolder + "/" + fileName);
 		try {
@@ -28,7 +28,7 @@ public class DataFile implements Configurable {
 
 			String[] header = { "Enchantment Solution", "Plugin by", "crashtheparty" };
 			config = new YamlConfig(file, header);
-			config.getFromConfig();
+			if (load) config.getFromConfig();
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
