@@ -17,11 +17,13 @@ import org.ctp.crashapi.utils.ChatUtils;
 public class DataFile implements Configurable {
 
 	private File file;
+	private String fileName;
 	private YamlConfig config;
 	private final CrashAPIPlugin plugin;
 
 	public DataFile(CrashAPIPlugin plugin, File dataFolder, String fileName, boolean extra, boolean load) {
 		this.plugin = plugin;
+		this.fileName = fileName;
 		file = extra ? new File(dataFolder + "/extras/" + fileName) : new File(dataFolder + "/" + fileName);
 		try {
 			YamlConfiguration.loadConfiguration(file);
@@ -93,7 +95,8 @@ public class DataFile implements Configurable {
 		String absolutePath = file.getAbsolutePath();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 		LocalDateTime now = LocalDateTime.now();
-		String newPath = absolutePath.substring(0, absolutePath.lastIndexOf('.')) + dtf.format(now) + ".yml.gz";
+		String name = fileName.substring(0, fileName.lastIndexOf('.'));
+		String newPath = absolutePath.substring(0, absolutePath.lastIndexOf('\\')) + "/backups-" + name + "/" + dtf.format(now) + ".yml.gz";
 		Path source = Paths.get(absolutePath);
 		Path target = Paths.get(newPath);
 		try {

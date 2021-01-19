@@ -35,6 +35,7 @@ public class HotbarNMS {
 				Hotbar_v1_16_R2.sendHotBarMessage(player, message);
 				break;
 			case 15:
+			case 16:
 				Hotbar_v1_16_R3.sendHotBarMessage(player, message);
 				break;
 		}

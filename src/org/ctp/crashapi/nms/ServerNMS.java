@@ -34,6 +34,7 @@ public class ServerNMS {
 				tick = net.minecraft.server.v1_16_R2.MinecraftServer.currentTick;
 				break;
 			case 15:
+			case 16:
 				tick = net.minecraft.server.v1_16_R3.MinecraftServer.currentTick;
 				break;
 		}

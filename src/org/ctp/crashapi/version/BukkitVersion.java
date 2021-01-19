@@ -71,7 +71,8 @@ public class BukkitVersion {
 		chat.sendInfo("Checking Bukkit Version: " + version);
 
 		try {
-			versionNumber = getBukkitVersionsFromFile("BukkitVersions").get(version);
+			Map<String, Integer> versions = getBukkitVersionsFromFile("BukkitVersions");
+			if (versions.get(version) != null) versionNumber = versions.get(version);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -86,7 +87,8 @@ public class BukkitVersion {
 		chat.sendInfo("Checking Bukkit API Version: " + apiVersion);
 
 		try {
-			versionNumber = getBukkitVersionsFromFile("BukkitAPIVersions").get(version);
+			Map<String, Integer> versions = getBukkitVersionsFromFile("BukkitAPIVersions");
+			if (versions.get(apiVersion) != null) versionNumber = versions.get(apiVersion);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

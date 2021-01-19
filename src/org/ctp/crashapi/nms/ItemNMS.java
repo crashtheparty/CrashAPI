@@ -30,6 +30,7 @@ public class ItemNMS {
 			case 14:
 				return Item_v1_16_R2.getTrident(trident);
 			case 15:
+			case 16:
 				return Item_v1_16_R3.getTrident(trident);
 		}
 		return null;

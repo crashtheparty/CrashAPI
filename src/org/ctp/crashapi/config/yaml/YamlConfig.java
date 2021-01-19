@@ -517,6 +517,12 @@ public class YamlConfig {
 		defaults = config.defaults;
 	}
 
+	public void copy(YamlConfig config) {
+		copyDefaults(config);
+		for(String s: config.getKeys())
+			if (getType(s) != null) setInfo(s, config.getInfo(s));
+	}
+
 	public void writeDefaults() {
 		for(Iterator<java.util.Map.Entry<String, YamlInfo>> it = defaults.entrySet().iterator(); it.hasNext();) {
 			java.util.Map.Entry<String, YamlInfo> e = it.next();

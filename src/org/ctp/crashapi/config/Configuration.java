@@ -74,8 +74,8 @@ public abstract class Configuration implements Configurable, Revertable {
 
 	@Override
 	public void reload() {
+		config.revert();
 		config.getFromConfig();
-		setDefaults();
 		save();
 	}
 
