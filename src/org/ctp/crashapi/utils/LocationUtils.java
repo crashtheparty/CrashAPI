@@ -134,4 +134,8 @@ public class LocationUtils {
 		}
 		return false;
 	}
+	
+	public static boolean isOnGround(Player player) {
+		return player.getLocation().getY() % 1 == 0 && player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid();
+	}
 }

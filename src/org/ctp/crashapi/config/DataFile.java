@@ -96,7 +96,9 @@ public class DataFile implements Configurable {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 		LocalDateTime now = LocalDateTime.now();
 		String name = fileName.substring(0, fileName.lastIndexOf('.'));
-		String newPath = absolutePath.substring(0, absolutePath.lastIndexOf('\\')) + "/backups-" + name + "/" + dtf.format(now) + ".yml.gz";
+		int last = absolutePath.lastIndexOf('\\');
+		if (last < 0) last = absolutePath.lastIndexOf('/');
+		String newPath = absolutePath.substring(0, last) + "/backups-" + name + "/" + dtf.format(now) + ".yml.gz";
 		Path source = Paths.get(absolutePath);
 		Path target = Paths.get(newPath);
 		try {

@@ -6,7 +6,6 @@ import org.ctp.crashapi.item.CustomItemType;
 import org.ctp.crashapi.item.ItemData;
 
 import net.Indyuce.mmoitems.api.Type;
-import net.mmogroup.mmolib.api.item.NBTItem;
 
 public class MMOUtils {
 
@@ -14,21 +13,19 @@ public class MMOUtils {
 		return CrashAPIPlugin.getMMOItems();
 	}
 
+	@SuppressWarnings("deprecation")
 	public static String getMMOTypeString(ItemStack item) {
 		if (!isEnabled()) return null;
-
-		NBTItem nbt = NBTItem.get(item);
-		Type type = nbt.getType();
-		if (type == null) return null;
+		Type type = Type.get(item);
+		if (type == null) return "";
 		return type.getId();
 	}
 
+	@SuppressWarnings("deprecation")
 	public static String getMMOTypeSetString(ItemStack item) {
 		if (!isEnabled()) return null;
-
-		NBTItem nbt = NBTItem.get(item);
-		Type type = nbt.getType();
-		if (type == null) return null;
+		Type type = Type.get(item);
+		if (type == null) return "";
 		return type.getItemSet().name();
 	}
 

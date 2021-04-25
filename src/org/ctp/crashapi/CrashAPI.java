@@ -50,6 +50,9 @@ public class CrashAPI extends CrashAPIPlugin {
 		check = new VersionCheck(pluginVersion, "https://raw.githubusercontent.com/crashtheparty/CrashAPI/master/VersionHistory", "https://www.spigotmc.org/resources/crashapi.82229/", "https://github.com/crashtheparty/CrashAPI", config.getConfig().getBoolean("get_latest_version"), false);
 		Bukkit.getPluginManager().registerEvents(check, this);
 		checkVersion();
+		Bukkit.getScheduler().runTaskLater(this, () -> {
+			addCompatibility();
+		}, 1l);
 	}
 
 	private void checkVersion() {
