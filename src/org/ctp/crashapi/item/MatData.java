@@ -8,6 +8,7 @@ public class MatData {
 	private String materialName;
 
 	public MatData(String name) {
+		if (name == null) name = "air";
 		materialName = name.toUpperCase();
 		try {
 			material = Material.valueOf(materialName);
