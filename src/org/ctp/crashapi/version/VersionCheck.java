@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class VersionCheck implements Listener, Runnable {
 
 	private PluginVersion version;
 	private String history, spigot, github;
-	private boolean latestVersion, experimentalVersion, checked;
+	private boolean latestVersion, experimentalVersion, checked, offline;
 
 	public VersionCheck(PluginVersion version, String historyURL, String spigotURL, String githubURL,
 	boolean getLatestVersion, boolean getExperimentalVersions) {
@@ -29,6 +30,7 @@ public class VersionCheck implements Listener, Runnable {
 		setGithub(githubURL);
 		setLatestVersion(getLatestVersion);
 		setExperimentalVersion(getExperimentalVersions);
+		offline = false;
 	}
 
 	@Override
@@ -62,10 +64,15 @@ public class VersionCheck implements Listener, Runnable {
 			}
 			in.close();
 		} catch (IOException e) {
+			if (e instanceof UnknownHostException) offline = true;
 			chat.sendWarning("Issue with finding newest version.");
 		}
 		version.setPluginVersions(versionHistory);
-		if (!version.isOfficialVersion() && latestVersion) chat.sendWarning("Uh oh! Plugin author forgot to update version history. Go tell them: " + spigot);
+		if (offline) {
+			chat.sendWarning("Your server cannot connect to the internet! Updates may have become available.");
+			chat.sendWarning("Current Version: " + version.getCurrent().getVersionName() + ". Downloads: " + spigot);
+		}
+		else if (!version.isOfficialVersion() && latestVersion) chat.sendWarning("Uh oh! Plugin author forgot to update version history. Go tell them: " + spigot);
 		else if (!version.hasNewerVersion(experimentalVersion) && latestVersion) chat.sendInfo("Your version is up-to-date.");
 		else if (latestVersion) {
 			Version pluginVersion = version.getNewestVersion(experimentalVersion);
@@ -90,7 +97,11 @@ public class VersionCheck implements Listener, Runnable {
 	private void sendPlayerMessage(Player player) {
 		Bukkit.getScheduler().runTaskLater(version.getPlugin(), () -> {
 			ChatUtils chat = version.getPlugin().getChat();
-			if (!version.isOfficialVersion()) chat.sendMessage(player, "Uh oh! Plugin author forgot to update version history. Go tell them: ", github);
+
+			if (offline) {
+				chat.sendMessage(player, "Your server cannot connect to the internet! Updates may have become available.");
+				chat.sendMessage(player, "Current Version: " + version.getCurrent().getVersionName() + ". Downloads: " + spigot);
+			} else if (!version.isOfficialVersion()) chat.sendMessage(player, "Uh oh! Plugin author forgot to update version history. Go tell them: ", github);
 			else if (version.hasNewerVersion(experimentalVersion)) {
 				if (version.isExperimentalVersion()) {
 					chat.sendMessage(player, "Thank you for using an experimental version of " + version.getPlugin().getName() + "! Please report any bugs you find to github.");
