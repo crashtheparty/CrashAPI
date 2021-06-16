@@ -5,10 +5,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.Validate;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.*;
+import org.bukkit.inventory.RecipeChoice.ExactChoice;
+import org.bukkit.inventory.RecipeChoice.MaterialChoice;
 import org.ctp.crashapi.resources.util.JsonBuilder;
 import org.ctp.crashapi.resources.util.RecipeModificationResult;
 import org.json.simple.JSONArray;
@@ -80,7 +82,6 @@ public class CrashShapedRecipe implements CrashRecipe {
 		return result;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public JsonObject toJsonObject() {
 		JsonObject json = new JsonObject();
@@ -103,9 +104,26 @@ public class CrashShapedRecipe implements CrashRecipe {
 		JsonObject key = new JsonObject();
 		Iterator<Entry<Character, RecipeChoice>> iter = getChoiceMap().entrySet().iterator();
 		while (iter.hasNext()) {
+			JsonArray array = new JsonArray();
 			Entry<Character, RecipeChoice> entry = iter.next();
 			if (entry.getValue() == null) continue;
-			key.add(entry.getKey().toString(), new JsonBuilder().add("item", "minecraft:" + entry.getValue().getItemStack().getType().name().toLowerCase()).build());
+			if (entry.getValue() instanceof MaterialChoice) {
+				MaterialChoice c = (MaterialChoice) entry.getValue();
+				if (c.getChoices().size() > 1) {
+					for (Material m : c.getChoices())
+						array.add(new JsonBuilder().add("item", "minecraft:" + m.toString().toLowerCase()).build());
+					key.add(entry.getKey().toString(), array);
+				} else
+					key.add(entry.getKey().toString(), new JsonBuilder().add("item", "minecraft:" + c.getItemStack().getType().name().toLowerCase()).build());
+			} else if (entry.getValue() instanceof ExactChoice) {
+				ExactChoice c = (ExactChoice) entry.getValue();
+				if (c.getChoices().size() > 1) {
+					for (ItemStack i : c.getChoices())
+						array.add(new JsonBuilder().add("item", i.toString()).build());
+					key.add(entry.getKey().toString(), array);
+				} else
+					key.add(entry.getKey().toString(), new JsonBuilder().add("item", c.getItemStack().toString()).build());
+			}
 		}
 		json.add("key", key);
 
@@ -131,6 +149,22 @@ public class CrashShapedRecipe implements CrashRecipe {
 
 	public void setResult(ItemStack result) {
 		this.result = result;
+	}
+
+	@Override
+	public Recipe getRecipe() {
+		ShapedRecipe r = new ShapedRecipe(id, result);
+		r.shape(rows);
+		Iterator<Entry<Character, RecipeChoice>> iter = ingredients.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<Character, RecipeChoice> entry = iter.next();
+			r.setIngredient(entry.getKey(), entry.getValue());
+		}
+		return r;
+	}
+
+	public String[] getShape() {
+		return rows;
 	}
 
 }

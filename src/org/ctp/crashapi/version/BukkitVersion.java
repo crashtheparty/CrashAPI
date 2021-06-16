@@ -2,7 +2,6 @@ package org.ctp.crashapi.version;
 
 import java.io.*;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,22 +57,25 @@ public class BukkitVersion {
 			}
 			in.close();
 		} catch (IOException e) {
-			if (e instanceof UnknownHostException){
-				File f = CrashConfigUtils.getTempFile(getClass(), "/" + file);
-				try {
-					for (String line : Files.readAllLines(f.toPath())){
-						String[] strings = line.split(" ");
-						if (strings.length > 0) map.put(strings[0], Integer.parseInt(strings[1]));
-					}
-				} catch (NumberFormatException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			} else
-				e.printStackTrace();
+			e.printStackTrace();
 		}
+		if (map.size() == 0) getBukkitVersionsFromLocal(file);
+		return map;
+	}
 
+	private Map<String, Integer> getBukkitVersionsFromLocal(String file) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		File f = CrashConfigUtils.getTempFile(getClass(), "/" + file);
+		try {
+			for(String line: Files.readAllLines(f.toPath())) {
+				String[] strings = line.split(" ");
+				if (strings.length > 0) map.put(strings[0], Integer.parseInt(strings[1]));
+			}
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		return map;
 	}
 

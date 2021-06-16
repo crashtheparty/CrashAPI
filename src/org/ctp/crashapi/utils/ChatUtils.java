@@ -15,6 +15,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.ctp.crashapi.CrashAPIPlugin;
 import org.ctp.crashapi.config.yaml.YamlConfig;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
+
 public class ChatUtils {
 
 	protected static List<ChatUtils> utils = new ArrayList<ChatUtils>();
@@ -30,6 +34,14 @@ public class ChatUtils {
 
 	protected ChatUtils(CrashAPIPlugin plugin) {
 		this.plugin = plugin;
+	}
+	
+	public void sendHotbarMessage(Player player, String message) {
+		sendHotbarMessage(player, new TextComponent(message));
+	}
+	
+	public void sendHotbarMessage(Player player, BaseComponent... components) {
+		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, components);
 	}
 
 	public void sendMessage(Player player, String message) {

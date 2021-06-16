@@ -1,25 +1,30 @@
 package org.ctp.crashapi.nms.damage;
 
-import org.bukkit.craftbukkit.v1_16_R3.entity.*;
+import org.bukkit.craftbukkit.v1_17_R1.entity.*;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import net.minecraft.server.v1_16_R3.*;
+import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityLiving;
+import net.minecraft.world.entity.projectile.EntityArrow;
 
-public class DamageEvent_v1_16_R3 {
+public class DamageEvent_v1_17_R1 {
 
 	public static void damageEntity(LivingEntity e, String cause, float damage) {
-		DamageSource source = DamageSource.GENERIC;
+		DamageSource source = DamageSource.n;
 		switch (cause) {
 			case "drown":
-				source = DamageSource.DROWN;
+				source = DamageSource.h;
 		}
 		((CraftEntity) e).getHandle().damageEntity(source, damage);
 	}
 
 	public static void damageEntity(LivingEntity e, Player p, String cause, float damage) {
-		DamageSource source = DamageSource.GENERIC;
+		DamageSource source = DamageSource.n;
 		Entity entity = ((CraftEntity) e).getHandle();
 		EntityPlayer player = ((CraftPlayer) p).getHandle();
 		switch (cause) {
@@ -33,7 +38,7 @@ public class DamageEvent_v1_16_R3 {
 		EntityArrow arrow = ((CraftArrow) a).getHandle();
 		EntityLiving entity = ((CraftLivingEntity) le).getHandle();
 		float f = (float) arrow.getMot().f();
-		int i = MathHelper.f(Math.max(f * arrow.getDamage(), 0.0D));
+		int i = MathHelper.e(Math.max(f * arrow.getDamage(), 0.0D));
 		arrow.a(entity, i);
 		return (int) arrow.getDamage() / 2;
 	}

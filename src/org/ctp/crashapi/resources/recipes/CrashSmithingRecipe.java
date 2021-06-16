@@ -2,8 +2,7 @@ package org.ctp.crashapi.resources.recipes;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.Validate;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.*;
 import org.ctp.crashapi.resources.util.JsonBuilder;
 import org.ctp.crashapi.resources.util.RecipeModificationResult;
 
@@ -85,6 +84,12 @@ public class CrashSmithingRecipe implements CrashRecipe {
 
 	public void setAdd(RecipeChoice.MaterialChoice add) {
 		this.add = add;
+	}
+
+	@Override
+	public Recipe getRecipe() {
+		SmithingRecipe r = new SmithingRecipe(id, item, base, add);
+		return r;
 	}
 
 }

@@ -100,4 +100,6 @@ public interface CrashRecipe {
 	public JsonObject toJsonObject();
 
 	public String toJson();
+	
+	public Recipe getRecipe();
 }
