@@ -32,6 +32,7 @@ public class WorldNMS {
 			case 16:
 				return World_v1_16_R3.getRegionalDifficulty(block);
 			case 17:
+			case 18:
 				return World_v1_17_R1.getRegionalDifficulty(block);
 		}
 		return new float[2];

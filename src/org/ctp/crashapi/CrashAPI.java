@@ -23,7 +23,7 @@ public class CrashAPI extends CrashAPIPlugin {
 	private BukkitVersion bukkitVersion;
 	private PluginVersion pluginVersion;
 	private VersionCheck check;
-	public static int MAX_VERSION = 17;
+	public static int MAX_VERSION = 18;
 	private static Economy ECON;
 	private static Boolean VAULT;
 
