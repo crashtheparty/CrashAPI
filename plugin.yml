@@ -1,4 +1,4 @@
 name: CrashAPI
-version: 1.0.13
+version: 1.0.14
 main: org.ctp.crashapi.CrashAPI
 api-version: 1.13
