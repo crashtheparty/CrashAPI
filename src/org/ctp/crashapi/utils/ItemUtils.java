@@ -15,29 +15,29 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.Vector;
 import org.ctp.crashapi.api.Configurations;
 import org.ctp.crashapi.compatibility.MMOUtils;
+import org.ctp.crashapi.events.EquipEvent;
+import org.ctp.crashapi.events.EquipEvent.EquipMethod;
 import org.ctp.crashapi.events.ItemAddEvent;
-import org.ctp.crashapi.events.ItemEquipEvent;
-import org.ctp.crashapi.events.ItemEquipEvent.HandMethod;
 import org.ctp.crashapi.item.*;
 
 public class ItemUtils {
 
 	public static void giveItemsToPlayer(Player player, Collection<ItemStack> drops, Location fallback,
 	boolean statistic) {
-		giveItemsToPlayer(player, drops, fallback, statistic, HandMethod.COMMAND);
+		giveItemsToPlayer(player, drops, fallback, statistic, EquipMethod.COMMAND);
 	}
 
 	public static void giveItemsToPlayer(Player player, Collection<ItemStack> drops, Location fallback,
-	boolean statistic, HandMethod method) {
+	boolean statistic, EquipMethod method) {
 		for(ItemStack drop: drops)
 			giveItemToPlayer(player, drop, fallback, statistic, method);
 	}
 
 	public static void giveItemToPlayer(Player player, ItemStack item, Location fallback, boolean statistic) {
-		giveItemToPlayer(player, item, fallback, statistic, HandMethod.COMMAND);
+		giveItemToPlayer(player, item, fallback, statistic, EquipMethod.COMMAND);
 	}
 
-	public static void giveItemToPlayer(Player player, ItemStack item, Location fallback, boolean statistic, HandMethod method) {
+	public static void giveItemToPlayer(Player player, ItemStack item, Location fallback, boolean statistic, EquipMethod method) {
 		if (MatData.isAir(item.getType()) || item.getAmount() == 0) return;
 		int addedAmount = 0;
 		addedAmount += addItems(player, item, method);
@@ -51,7 +51,7 @@ public class ItemUtils {
 		if (addedAmount > 0 && statistic) player.incrementStatistic(Statistic.PICKUP, item.getType(), addedAmount);
 	}
 
-	private static int addItems(Player player, ItemStack item, HandMethod method) {
+	private static int addItems(Player player, ItemStack item, EquipMethod method) {
 		int prevAmount = item.getAmount();
 		int fullAmount = item.getAmount();
 		PlayerInventory inv = player.getInventory();
@@ -120,9 +120,9 @@ public class ItemUtils {
 		return -1;
 	}
 
-	private static void callItemEvent(Player player, int slot, HandMethod method, ItemStack prev, ItemStack current) {
+	private static void callItemEvent(Player player, int slot, EquipMethod method, ItemStack prev, ItemStack current) {
 		Event event = null;
-		if (slot == player.getInventory().getHeldItemSlot()) event = new ItemEquipEvent(player, method, ItemSlotType.MAIN_HAND, prev, current);
+		if (slot == player.getInventory().getHeldItemSlot()) event = new EquipEvent(player, method, ItemSlotType.MAIN_HAND, prev, current);
 		else
 			event = new ItemAddEvent(player, current);
 		Bukkit.getPluginManager().callEvent(event);

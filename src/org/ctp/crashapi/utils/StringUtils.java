@@ -2,7 +2,21 @@ package org.ctp.crashapi.utils;
 
 import java.util.List;
 
+import org.bukkit.entity.Cat;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Ocelot;
+
 public class StringUtils {
+	
+	public static String getCatType(LivingEntity entity) {
+		if (entity instanceof Cat) {
+			Cat cat = (Cat) entity;
+			return cat.getCatType().name();
+		}
+		if (entity instanceof Ocelot) return "WILD_OCELOT";
+		return "";
+	}
+	
 	public static String join(List<? extends Object> strings, String divider) {
 		StringBuilder sb = new StringBuilder();
 

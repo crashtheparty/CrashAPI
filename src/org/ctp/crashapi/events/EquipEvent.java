@@ -1,9 +1,9 @@
 package org.ctp.crashapi.events;
 
-import org.bukkit.entity.Player;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.ctp.crashapi.item.ItemSlotType;
 
@@ -11,7 +11,7 @@ import org.ctp.crashapi.item.ItemSlotType;
  * @author Arnah
  * @since Jul 30, 2015
  */
-public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
+public final class EquipEvent extends EntityEvent implements Cancellable {
 
 	private static final HandlerList handlers = new HandlerList();
 
@@ -27,15 +27,20 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
 	private boolean cancel = false;
 	private final EquipMethod equipType;
 	private final ItemSlotType type;
-	private final ItemStack oldArmorPiece, newArmorPiece;
+	private final ItemStack oldItem, newItem;
 
-	public ArmorEquipEvent(final Player player, final EquipMethod equipType, final ItemSlotType type,
-	final ItemStack oldArmorPiece, final ItemStack newArmorPiece) {
-		super(player);
+	public EquipEvent(final HumanEntity human, final EquipMethod equipType, final ItemSlotType type,
+	final ItemStack oldItem, final ItemStack newItem) {
+		super(human);
 		this.equipType = equipType;
 		this.type = type;
-		this.oldArmorPiece = oldArmorPiece;
-		this.newArmorPiece = newArmorPiece;
+		this.oldItem = oldItem;
+		this.newItem = newItem;
+	}
+	
+	@Override
+	public final HumanEntity getEntity() {
+		return (HumanEntity) entity;
 	}
 
 	@Override
@@ -52,12 +57,12 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
 		return type;
 	}
 
-	public final ItemStack getOldArmorPiece() {
-		return oldArmorPiece;
+	public final ItemStack getOldItem() {
+		return oldItem;
 	}
 
-	public final ItemStack getNewArmorPiece() {
-		return newArmorPiece;
+	public final ItemStack getNewItem() {
+		return newItem;
 	}
 
 	/**
@@ -111,6 +116,12 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
 		/**
 		 * When getting an item changed from a command
 		 */
-		COMMAND,;
+		COMMAND,
+		HELD_SWITCH, 
+		CRAFTED, 
+		PICK_UP, 
+		DROP, 
+		HOT_BAR, 
+		HELD_SWAP,
 	}
 }

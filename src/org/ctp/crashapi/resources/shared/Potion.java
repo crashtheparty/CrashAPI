@@ -5,7 +5,6 @@ import org.bukkit.Material;
 /**
  * Specifies a potion's effect.
  */
-@SuppressWarnings("unused")
 enum Potion implements SharedEnum {
 	/**
 	 * Also known as the uncraftable potion. It is not actually empty: the texture

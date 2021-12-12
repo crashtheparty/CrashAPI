@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang.Validate;
+import org.ctp.crashapi.resources.util.CrashValidate;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.ctp.crashapi.resources.util.JsonBuilder;
@@ -119,7 +119,7 @@ public class ItemObject extends SharedObject {
 	 * @return the current item object for chaining
 	 */
 	public ItemObject addEnchant(EnchantObject enchant) {
-		Validate.notNull(enchant);
+		CrashValidate.notNull(enchant);
 		if (enchants == null) enchants = new HashSet<>();
 		enchants.add(enchant);
 		return this;
@@ -132,7 +132,7 @@ public class ItemObject extends SharedObject {
 	 * @return the current item object for chaining
 	 */
 	public ItemObject removeEnchant(EnchantObject enchant) {
-		Validate.notNull(enchant);
+		CrashValidate.notNull(enchant);
 		if (enchants != null) enchants.remove(enchant);
 		return this;
 	}

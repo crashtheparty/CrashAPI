@@ -354,6 +354,7 @@ public class ItemType {
 				i.addAll(getEnchantables(SHIELD.getType()));
 				i.addAll(getEnchantables(FISHING_ROD.getType()));
 				i.addAll(getEnchantables(ELYTRA.getType()));
+				i.addAll(getEnchantables(FISHING_STICK.getType()));
 				break;
 			case "FISHING_STICK":
 				i.addAll(getEnchantables(CARROT_ON_A_STICK.getType()));

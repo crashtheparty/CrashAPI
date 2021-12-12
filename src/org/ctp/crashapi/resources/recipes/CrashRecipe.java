@@ -1,8 +1,6 @@
 package org.ctp.crashapi.resources.recipes;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
 import java.util.logging.Level;
 
@@ -36,7 +34,9 @@ public interface CrashRecipe {
 		File file = new File(Bukkit.getWorlds().get(0).getWorldFolder(), String.join(File.separator, "datapacks", "bukkit", "data", id.getNamespace(), "recipes", id.getKey()) + ".json");
 		if (!file.exists()) try {
 			Files.createParentDirs(file);
-			Files.write(json, file, Charsets.UTF_8);
+			BufferedWriter writer = Files.newWriter(file, Charsets.UTF_8);
+			writer.write(json);
+			writer.close();
 			// noinspection deprecation
 			return new RecipeModificationResult(true, true, "Loaded successfully.");
 		} catch (Exception e) {
@@ -46,7 +46,9 @@ public interface CrashRecipe {
 
 		try {
 			boolean changed = !getCurrentJSON(file).equals(jsonObject);
-			Files.write(json, file, Charsets.UTF_8);
+			BufferedWriter writer = Files.newWriter(file, Charsets.UTF_8);
+			writer.write(json);
+			writer.close();
 
 			if (reload) {
 				Bukkit.reloadData();

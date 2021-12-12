@@ -1,4 +1,4 @@
-package org.ctp.crashapi.item;
+package org.ctp.crashapi.entity;
 
 import org.bukkit.entity.EntityType;
 

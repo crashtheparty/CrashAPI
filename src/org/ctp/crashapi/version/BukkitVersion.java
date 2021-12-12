@@ -59,7 +59,7 @@ public class BukkitVersion {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (map.size() == 0) getBukkitVersionsFromLocal(file);
+		if (map.size() == 0) return getBukkitVersionsFromLocal(file);
 		return map;
 	}
 
@@ -89,6 +89,7 @@ public class BukkitVersion {
 		try {
 			Map<String, Integer> versions = getBukkitVersionsFromFile("BukkitVersions");
 			if (versions.get(version) != null) versionNumber = versions.get(version);
+			else versionNumber = getBukkitVersionsFromLocal("BukkitVersions").get(version);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -105,6 +106,7 @@ public class BukkitVersion {
 		try {
 			Map<String, Integer> versions = getBukkitVersionsFromFile("BukkitAPIVersions");
 			if (versions.get(apiVersion) != null) versionNumber = versions.get(apiVersion);
+			else versionNumber = getBukkitVersionsFromLocal("BukkitAPIVersions").get(apiVersion);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

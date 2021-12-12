@@ -5,7 +5,6 @@ package org.ctp.crashapi.resources.shared;
  * 
  * @see LocationObject
  */
-@SuppressWarnings("unused")
 enum Feature implements SharedEnum {
 	END_CITY("EndCity"), FORTRESS("Fortress"), MANSION("Mansion"), MINESHAFT("Mineshaft"), MONUMENT("Monument"),
 	STRONGHOLD("Stronghold"), TEMPLE("Temple"), VILLAGE("Village");

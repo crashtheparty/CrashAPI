@@ -2,7 +2,7 @@ package org.ctp.crashapi.resources.advancements;
 
 import java.util.function.Function;
 
-import org.apache.commons.lang.Validate;
+import org.ctp.crashapi.resources.util.CrashValidate;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
@@ -19,7 +19,7 @@ public class AdvancementFactory {
 	private final boolean autoReload;
 
 	public AdvancementFactory(CrashAPIPlugin plugin, boolean autoActivate, boolean autoReload) {
-		Validate.isTrue(!(!autoActivate && autoReload), "Auto reload doesn't't work without auto activation.");
+		CrashValidate.isTrue(!(!autoActivate && autoReload), "Auto reload doesn't't work without auto activation.");
 		this.plugin = plugin;
 		this.autoActivate = autoActivate;
 		this.autoReload = autoReload;
@@ -68,8 +68,8 @@ public class AdvancementFactory {
 	public Advancement getImpossible(String id, @Nullable Advancement parent, String title, String description,
 	Material icon, String... triggers) {
 		validate(id, title, description, icon);
-		Validate.notNull(triggers);
-		Validate.isTrue(triggers.length > 0, "At least one trigger must be specified.");
+		CrashValidate.notNull(triggers);
+		CrashValidate.isTrue(triggers.length > 0, "At least one trigger must be specified.");
 		Advancement advancement = new Advancement(new NamespacedKey(plugin, id), new ItemObject().setItem(icon), new TextComponent(title), new TextComponent(description));
 		for(String trigger: triggers)
 			advancement.addTrigger(trigger, new ImpossibleTrigger());
@@ -85,7 +85,7 @@ public class AdvancementFactory {
 	public Advancement getCountedImpossible(String id, @Nullable Advancement parent, String title, String description,
 	Material icon, int triggerCount) {
 		validate(id, title, description, icon);
-		Validate.isTrue(triggerCount > 0, "There must be at least one trigger.");
+		CrashValidate.isTrue(triggerCount > 0, "There must be at least one trigger.");
 		Advancement advancement = new Advancement(new NamespacedKey(plugin, id), new ItemObject().setItem(icon), new TextComponent(title), new TextComponent(description));
 		for(int i = 0; i < triggerCount; i++)
 			advancement.addTrigger(String.valueOf(i), new ImpossibleTrigger());
@@ -95,9 +95,9 @@ public class AdvancementFactory {
 
 	private static void validate(String id, String title, String description, Material icon) {
 		Validator.noNamespace(id);
-		Validate.notNull(title);
-		Validate.notNull(description);
-		Validate.notNull(icon);
+		CrashValidate.notNull(title);
+		CrashValidate.notNull(description);
+		CrashValidate.notNull(icon);
 	}
 
 	private void finalize(Advancement advancement, @Nullable Advancement parent) {

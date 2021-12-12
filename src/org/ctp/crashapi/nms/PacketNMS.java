@@ -2,70 +2,34 @@ package org.ctp.crashapi.nms;
 
 import org.bukkit.block.Block;
 import org.ctp.crashapi.CrashAPI;
-import org.ctp.crashapi.nms.packet.*;
+import org.ctp.crashapi.nms.packet.Packet_v1_16_R3;
+import org.ctp.crashapi.nms.packet.Packet_v1_17_R1;
+import org.ctp.crashapi.nms.packet.Packet_v1_18_R1;
 
 public class PacketNMS {
 
 	public static int addParticle(Block block, int stage) {
 		switch (CrashAPI.getPlugin().getBukkitVersion().getVersionNumber()) {
-			case 1:
-				return Packet_v1_13_R1.addParticle(block, stage);
-			case 2:
-			case 3:
-				return Packet_v1_13_R2.addParticle(block, stage);
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-				return Packet_v1_14_R1.addParticle(block, stage);
-			case 9:
-			case 10:
-			case 11:
-				return Packet_v1_15_R1.addParticle(block, stage);
-			case 12:
-				return Packet_v1_16_R1.addParticle(block, stage);
-			case 13:
-			case 14:
-				return Packet_v1_16_R2.addParticle(block, stage);
-			case 15:
 			case 16:
 				return Packet_v1_16_R3.addParticle(block, stage);
-			case 17:
 			case 18:
 				return Packet_v1_17_R1.addParticle(block, stage);
+			case 19:
+			case 20:
+				return Packet_v1_18_R1.addParticle(block, stage);
 		}
 		return 0;
 	}
 
 	public static int updateParticle(Block block, int stage, int id) {
 		switch (CrashAPI.getPlugin().getBukkitVersion().getVersionNumber()) {
-			case 1:
-				return Packet_v1_13_R1.updateParticle(block, stage, id);
-			case 2:
-			case 3:
-				return Packet_v1_13_R2.updateParticle(block, stage, id);
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-				return Packet_v1_14_R1.updateParticle(block, stage, id);
-			case 9:
-			case 10:
-			case 11:
-				return Packet_v1_15_R1.updateParticle(block, stage, id);
-			case 12:
-				return Packet_v1_16_R1.updateParticle(block, stage, id);
-			case 13:
-			case 14:
-				return Packet_v1_16_R2.updateParticle(block, stage, id);
-			case 15:
 			case 16:
 				return Packet_v1_16_R3.updateParticle(block, stage, id);
-			case 17:
 			case 18:
 				return Packet_v1_17_R1.updateParticle(block, stage, id);
+			case 19:
+			case 20:
+				return Packet_v1_18_R1.updateParticle(block, stage, id);
 		}
 		return 0;
 	}

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 
-import org.apache.commons.lang.Validate;
+import org.ctp.crashapi.resources.util.CrashValidate;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
@@ -49,10 +49,10 @@ public class Advancement {
 	private boolean hidden = false;
 
 	Advancement(NamespacedKey id, ItemObject icon, TextComponent title, TextComponent description) {
-		Validate.notNull(id);
-		Validate.notNull(icon);
-		Validate.notNull(title);
-		Validate.notNull(description);
+		CrashValidate.notNull(id);
+		CrashValidate.notNull(icon);
+		CrashValidate.notNull(title);
+		CrashValidate.notNull(description);
 		this.id = id;
 		this.icon = icon;
 		this.title = title;
@@ -112,27 +112,27 @@ public class Advancement {
 	}
 
 	public Advancement addTrigger(String id, Trigger trigger) {
-		Validate.notNull(id);
-		Validate.notNull(trigger);
+		CrashValidate.notNull(id);
+		CrashValidate.notNull(trigger);
 		triggers.put(id, trigger);
 		return this;
 	}
 
 	public Advancement removeTrigger(String id) {
-		Validate.notNull(id);
+		CrashValidate.notNull(id);
 		triggers.remove(id);
 		return this;
 	}
 
 	public Advancement addRequirement(String... requirement) {
-		Validate.notNull(requirement);
+		CrashValidate.notNull(requirement);
 		if (requirements == null) requirements = new HashSet<>();
 		requirements.add(requirement);
 		return this;
 	}
 
 	public Advancement removeRequirement(String... requirement) {
-		Validate.notNull(requirement);
+		CrashValidate.notNull(requirement);
 		if (requirements == null) return this;
 		for(Iterator<String[]> iterator = requirements.iterator(); iterator.hasNext();)
 			if (Arrays.equals(iterator.next(), requirement)) {
@@ -148,7 +148,7 @@ public class Advancement {
 	}
 
 	public Advancement setFrame(Frame frame) {
-		Validate.notNull(frame);
+		CrashValidate.notNull(frame);
 		this.frame = frame;
 		return this;
 	}
@@ -181,7 +181,7 @@ public class Advancement {
 	}
 
 	public Advancement makeChild(NamespacedKey parent) {
-		Validate.notNull(parent);
+		CrashValidate.notNull(parent);
 		this.parent = parent;
 		background = null;
 		return this;
@@ -255,10 +255,10 @@ public class Advancement {
 		JsonObject json = new JsonObject();
 		if (parent != null) json.addProperty("parent", parent.toString());
 
-		Validate.notNull(icon.getItem());
+		CrashValidate.notNull(icon.getItem());
 		json.add("display", new JsonBuilder().add("icon", icon.toJson()).add("title", title).add("description", description).add("background", background).add("frame", frame.getValue()).addFalse("show_toast", toast).addFalse("announce_to_chat", announce).addTrue("hidden", hidden).build());
 
-		Validate.notEmpty(triggers, "All advancements must contain at least one trigger.");
+		CrashValidate.notEmpty(triggers, "All advancements must contain at least one trigger.");
 		JsonObject criteria = new JsonObject();
 		for(Map.Entry<String, Trigger> entry: triggers.entrySet())
 			criteria.add(entry.getKey(), entry.getValue().toJson());
@@ -267,7 +267,7 @@ public class Advancement {
 		if (requirements != null && !requirements.isEmpty()) {
 			for(String[] array: requirements)
 				for(String string: array)
-					Validate.isTrue(triggers.containsKey(string), "The " + string + " trigger doesn't exist in advancement: ", id);
+					CrashValidate.isTrue(triggers.containsKey(string), "The " + string + " trigger doesn't exist in advancement: ", id);
 			json.add("requirements", JsonBuilder.GSON.toJsonTree(requirements, new TypeToken<Set<String[]>>() {}.getType()));
 		}
 

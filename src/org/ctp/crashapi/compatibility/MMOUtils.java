@@ -13,7 +13,6 @@ public class MMOUtils {
 		return CrashAPIPlugin.getMMOItems();
 	}
 
-	@SuppressWarnings("deprecation")
 	public static String getMMOTypeString(ItemStack item) {
 		if (!isEnabled()) return null;
 		Type type = Type.get(item);
@@ -21,7 +20,6 @@ public class MMOUtils {
 		return type.getId();
 	}
 
-	@SuppressWarnings("deprecation")
 	public static String getMMOTypeSetString(ItemStack item) {
 		if (!isEnabled()) return null;
 		Type type = Type.get(item);

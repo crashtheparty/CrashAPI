@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.Validate;
+import org.ctp.crashapi.resources.util.CrashValidate;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 
@@ -26,7 +26,7 @@ public class BlockObject extends SharedObject {
 	 *            the type of the block
 	 */
 	public BlockObject(Material block) {
-		Validate.notNull(block);
+		CrashValidate.notNull(block);
 		this.block = block;
 	}
 
@@ -55,7 +55,7 @@ public class BlockObject extends SharedObject {
 	 * @return the current block object for chaining
 	 */
 	public BlockObject setState(String state, @Nullable String value) {
-		Validate.notNull(state);
+		CrashValidate.notNull(state);
 		if (value == null) {
 			if (states != null) states.remove(state);
 		} else {

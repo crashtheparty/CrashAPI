@@ -2,7 +2,7 @@ package org.ctp.crashapi.resources.trigger;
 
 import java.util.Objects;
 
-import org.apache.commons.lang.Validate;
+import org.ctp.crashapi.resources.util.CrashValidate;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.ctp.crashapi.resources.shared.SharedEnum;
 import org.ctp.crashapi.resources.util.JsonBuilder;
@@ -22,7 +22,7 @@ public abstract class Trigger {
 	 *            the of the trigger
 	 */
 	protected Trigger(Type type) {
-		Validate.notNull(type);
+		CrashValidate.notNull(type);
 		this.type = type;
 	}
 

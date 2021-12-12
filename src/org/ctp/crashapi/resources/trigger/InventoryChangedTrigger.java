@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang.Validate;
+import org.ctp.crashapi.resources.util.CrashValidate;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.ctp.crashapi.resources.shared.ItemObject;
 import org.ctp.crashapi.resources.shared.RangeObject;
@@ -55,14 +55,14 @@ public class InventoryChangedTrigger extends Trigger {
 	}
 
 	public InventoryChangedTrigger addItem(ItemObject item) {
-		Validate.notNull(item);
+		CrashValidate.notNull(item);
 		if (items == null) items = new HashSet<>();
 		items.add(item);
 		return this;
 	}
 
 	public InventoryChangedTrigger removeItem(ItemObject item) {
-		Validate.notNull(item);
+		CrashValidate.notNull(item);
 		if (items != null) items.remove(item);
 		return this;
 	}

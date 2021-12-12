@@ -1,4 +1,4 @@
-package org.ctp.crashapi.item;
+package org.ctp.crashapi.entity;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -10,8 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.ctp.crashapi.api.Configurations;
-import org.ctp.crashapi.nms.MobNMS;
 import org.ctp.crashapi.utils.ChatUtils;
+import org.ctp.crashapi.utils.StringUtils;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -173,8 +173,18 @@ public enum MobHeads {
 	ZOMBIE_WEAPONSMITH_VILLAGER("[I;-1844572353,-185316455,-1901309798,-1756753005]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDM3MDg5NGI1Y2MzMDVkODdhYTA4YzNiNGIwODU4N2RiNjhmZjI5ZTdhM2VmMzU0Y2FkNmFiY2E1MGU1NTI4YiJ9fX0="),
 	ZOMBIE_PIGMAN("6dfe31ce-27f6-4e4b-a515-60a57b77cc8c", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmNhNmQ2YmVkMGZkYWJiNmE0OWM0MTMzM2IzYTU3NzgwNmJlNjZiODEyOTNiYmU5MGJiMWNjY2I3ZjM2M2E4MCJ9fX0="),
 	ZOMBIFIED_PIGLIN("[I;-2085738719,-1437383164,-1311606964,-1304479199]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmRmMDMxMjhiMDAyYTcwNzA4ZDY4MjVlZDZjZjU0ZGRmNjk0YjM3NjZkNzhkNTY0OTAzMGIxY2I4YjM0YzZmYSJ9fX0="),
-	PIGLIN_BRUTE("[I;-1179055889,425870002,-1373572226,1177565319]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQ4ODc5OWM4M2VjYjI5NDUyY2ViYTg5YzNjMDA5OTIxOTI3NGNlNWIyYmZiOGFkMGIzZWE0YzY1ZmFjNDYzMCJ9fX0=");
-
+	PIGLIN_BRUTE("[I;-1179055889,425870002,-1373572226,1177565319]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQ4ODc5OWM4M2VjYjI5NDUyY2ViYTg5YzNjMDA5OTIxOTI3NGNlNWIyYmZiOGFkMGIzZWE0YzY1ZmFjNDYzMCJ9fX0="),
+	LUCY_AXOLOTL("[I;-495293005,-481671693,-1239113299,1549606366]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjY3ZTE1ZWFiNzMwNjRiNjY4MGQxZGI5OGJhNDQ1ZWQwOTE0YmEzNWE3OTk5OTdjMGRhMmIwM2ZmYzNhODgyNiJ9fX0="),
+	WILD_AXOLOTL("[I;1713596526,957432793,-1149242759,513234937]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDdjZjAyNzQ5OThiZjVhN2YzOGIzNzAzNmUxNTRmMTEyZmEyZTI4YmFkNDBkNWE3Yzk0NzY1ZmU0ZjUyMjExZSJ9fX0="),
+	GOLD_AXOLOTL("[I;706383151,735923467,-1295348188,-1428745865]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTU4NTYwMTE1ZmFhZDExNjE5YjNkNTVkZTc5ZWYyYTA1M2Y0NzhhNjcxOTRiYmU5MjQ3ZWRlYTBiYzk4ZTgzNCJ9fX0="),
+	CYAN_AXOLOTL("[I;-99306391,701121531,-1561983959,678763888]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODUxMTk2ZDQzOTMwNjU5ZDcxN2UxYjZhMDQ2YTA4ZDEyMjBmY2I0ZTMxYzQ4NTZiYzMzZTc1NTE5ODZlZjFkIn19fQ=="),
+	BLUE_AXOLOTL("[I;-597818000,-567195819,-1576428771,-1756821454]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjhmZDEwYjBmZWY0NTk1OTYwYjFmNjQxOTNiYzhhMTg2NWEyZDJlZDQ4YjJlMmNlMDNkOTk0NTYzMDI3ZGY5NSJ9fX0="),
+	GLOW_SQUID("[I;197043621,-425833010,-1931009088,1483434690]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGIyZTliNjU4MWZlZDQ4YTk5ZTAzMjMwOTFhZDVjM2MzMjZjZGEyMDA3M2UyOGE5MDJhMDM3M2Y3MzgyYjU5ZiJ9fX0="),
+	GOAT("[I;-511378304,1806060036,-1710884032,2059216206]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODc0NzNlMDU1ZGY2ZTdmZDk4NjY0ZTlmZGI2MzY3NWYwODgxMDYzMDVkNzQ0MDI0YTQxYmIzNTg5MThhMTQyYiJ9fX0="),
+	SCREAMING_GOAT("[I;-794148567,-1946073371,-1420453866,-1100303190]", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmRhNDg1YWMyMzUxMjQyMDg5MWE1YWUxZThkZTk4OWYwOTFkODQ4ZDE1YTkwNjhkYTQ3MjBkMzE2ZmM0MzMwZiJ9fX0="),
+	
+	;
+	
 	private final String id, texture;
 
 	MobHeads(String id, String texture) {
@@ -302,6 +312,14 @@ public enum MobHeads {
 
 					}
 				}
+			} else if (data.getEntityName().equalsIgnoreCase("AXOLOTL")) {
+				Axolotl axolotl = (Axolotl) entity;
+				String name = axolotl.getVariant().name() + "_AXOLOTL";
+				try {
+					skull = MobHeads.valueOf(name).toItem();
+				} catch (Exception ex) {
+
+				}
 			} else if (data.getEntityName().equalsIgnoreCase("BEE")) {
 				Bee bee = (Bee) entity;
 				if (bee.getAnger() > 0 && bee.hasNectar()) skull = ANGRY_NECTAR_BEE.toItem();
@@ -310,7 +328,7 @@ public enum MobHeads {
 				else
 					skull = BEE.toItem();
 			} else if (data.getEntityName().equalsIgnoreCase("CAT") || data.getEntityName().equalsIgnoreCase("OCELOT")) {
-				String type = MobNMS.getCatType(entity);
+				String type = StringUtils.getCatType(entity);
 				switch (type.toUpperCase()) {
 					case "TABBY":
 						skull = TABBY_CAT.toItem();
@@ -404,6 +422,11 @@ public enum MobHeads {
 						skull = WEAPONSMITH_VILLAGER.toItem();
 						break;
 				}
+			} else if (data.getEntityName().equalsIgnoreCase("GOAT")) {
+				Goat goat = (Goat) entity;
+				if (goat.isScreaming()) skull = SCREAMING_GOAT.toItem();
+				else
+					skull = GOAT.toItem();
 			} else if (data.getEntityName().equalsIgnoreCase("FOX")) {
 				Fox fox = (Fox) entity;
 				switch (fox.getFoxType().name()) {

@@ -1,7 +1,7 @@
 package org.ctp.crashapi.resources.recipes;
 
+import org.ctp.crashapi.resources.util.CrashValidate;
 import org.bukkit.NamespacedKey;
-import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.Validate;
 import org.bukkit.inventory.*;
 import org.ctp.crashapi.resources.util.JsonBuilder;
 import org.ctp.crashapi.resources.util.RecipeModificationResult;
@@ -37,13 +37,13 @@ public class CrashSmithingRecipe implements CrashRecipe {
 
 		json.addProperty("type", "minecraft:smithing");
 
-		Validate.notNull(item, "A result must exist for recipe: " + id.toString());
+		CrashValidate.notNull(item, "A result must exist for recipe: " + id.toString());
 		json.add("result", new JsonBuilder().add("item", "minecraft:" + item.getType().name().toLowerCase()).build());
 
-		Validate.notNull(base, "A base type must exist for recipe: " + id.toString());
+		CrashValidate.notNull(base, "A base type must exist for recipe: " + id.toString());
 		json.add("base", new JsonBuilder().add("item", "minecraft:" + base.getItemStack().getType().name().toLowerCase()).build());
 
-		Validate.notNull(add, "An addition type must exist for recipe: " + id.toString());
+		CrashValidate.notNull(add, "An addition type must exist for recipe: " + id.toString());
 		json.add("addition", new JsonBuilder().add("item", "minecraft:" + add.getItemStack().getType().name().toLowerCase()).build());
 
 		return json;
