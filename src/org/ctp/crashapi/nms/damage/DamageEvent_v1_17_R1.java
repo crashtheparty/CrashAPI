@@ -62,11 +62,12 @@ public class DamageEvent_v1_17_R1 {
 		EntityLiving entity = ((CraftLivingEntity) le).getHandle();
 		float f = 0;
 		try {
-			Class<?> c = EntityArrow.class;
+			Class<?> c = Entity.class;
 			Method m = c.getDeclaredMethod("getMot");
 			Object o = m.invoke(arrow);
 			if (o instanceof Vec3D) f = (float) ((Vec3D) o).f();
-			Method dm = c.getDeclaredMethod("getDamage");
+			Class<?> cArrow = EntityArrow.class;
+			Method dm = cArrow.getDeclaredMethod("getDamage");
 			Object dmo = dm.invoke(arrow);
 			if (dmo instanceof Number) {
 				int i = MathHelper.e(Math.max(f * (Integer) dmo, 0.0D));
