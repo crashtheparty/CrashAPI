@@ -265,6 +265,13 @@ public class YamlConfig {
 		return info.getStringList();
 	}
 
+	public List<String> getStringList(String path, List<String> def) {
+		YamlInfo info = getInfo(path);
+		if (info == null) return def;
+		return info.getStringList();
+	}
+
+
 	public boolean contains(String path) {
 		return getInfo(path) != null;
 	}

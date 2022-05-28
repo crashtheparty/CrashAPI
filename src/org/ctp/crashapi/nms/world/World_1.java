@@ -3,17 +3,18 @@ package org.ctp.crashapi.nms.world;
 import java.lang.reflect.Method;
 
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.ctp.crashapi.nms.NMS;
 
 import net.minecraft.core.BlockPosition;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.DifficultyDamageScaler;
 import net.minecraft.world.level.World;
 
-public class World_v1_17_R1 {
+public class World_1 extends NMS {
+
 	@SuppressWarnings("resource")
 	public static float[] getRegionalDifficulty(Block block) {
-		WorldServer server = ((CraftWorld) block.getWorld()).getHandle();
+		WorldServer server = getCraftBukkitWorld(block.getWorld());
 		float b = 0;
 		float d = 0;
 		try {

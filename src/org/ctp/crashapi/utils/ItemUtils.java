@@ -43,11 +43,20 @@ public class ItemUtils {
 		addedAmount += addItems(player, item, method);
 		Location fallbackClone = fallback.clone();
 		boolean dropNaturally = Configurations.getConfigurations().getConfig().getBoolean("drop_items_naturally");
-		if (item.getAmount() > 0 && !dropNaturally) {
-			Item droppedItem = fallbackClone.getWorld().dropItem(fallbackClone, item);
-			droppedItem.setVelocity(new Vector(0, 0, 0));
-			droppedItem.teleport(fallbackClone);
-		} else if (item.getAmount() > 0) fallbackClone.getWorld().dropItemNaturally(fallbackClone, item);
+		while (item.getAmount() > 0) {
+			ItemStack drop = item.clone();
+			if (drop.getAmount() > 64) {
+				item.setAmount(item.getAmount() - 64);
+				drop.setAmount(64);
+			} else
+				item.setAmount(0);
+			if (!dropNaturally) {
+				Item droppedItem = fallbackClone.getWorld().dropItem(fallbackClone, drop);
+				droppedItem.setVelocity(new Vector(0, 0, 0));
+				droppedItem.teleport(fallbackClone);
+			} else
+				fallbackClone.getWorld().dropItemNaturally(fallbackClone, drop);
+		}
 		if (addedAmount > 0 && statistic) player.incrementStatistic(Statistic.PICKUP, item.getType(), addedAmount);
 	}
 

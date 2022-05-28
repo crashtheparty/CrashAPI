@@ -6,16 +6,13 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 
-import org.ctp.crashapi.resources.util.CrashValidate;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.ctp.crashapi.resources.shared.ItemObject;
 import org.ctp.crashapi.resources.trigger.LocationTrigger;
 import org.ctp.crashapi.resources.trigger.Trigger;
-import org.ctp.crashapi.resources.util.AdvancementModificationResult;
-import org.ctp.crashapi.resources.util.JsonBuilder;
-import org.ctp.crashapi.resources.util.Validator;
+import org.ctp.crashapi.resources.util.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 

@@ -7,21 +7,22 @@ public class CrashTrigger {
 
 	private String criteria;
 	private Trigger trigger;
-	private int maxAmount = 0, versionMinimum = 0, versionMaximum = 0;
+	private int maxAmount = 0;
+	private int[] versionMinimum, versionMaximum;
 
 	public CrashTrigger(String criteria) {
-		this(criteria, 0, 0, 0, new ImpossibleTrigger());
+		this(criteria, 0, new int[3], new int[3], new ImpossibleTrigger());
 	}
 
 	public CrashTrigger(String criteria, int maxAmount) {
-		this(criteria, maxAmount, 0, 0, new ImpossibleTrigger());
+		this(criteria, maxAmount, new int[3], new int[3], new ImpossibleTrigger());
 	}
 
-	public CrashTrigger(String criteria, int maxAmount, int versionMinimum, int versionMaximum) {
+	public CrashTrigger(String criteria, int maxAmount, int[] versionMinimum, int[] versionMaximum) {
 		this(criteria, maxAmount, versionMinimum, versionMaximum, new ImpossibleTrigger());
 	}
 
-	public CrashTrigger(String criteria, int maxAmount, int versionMinimum, int versionMaximum, Trigger trigger) {
+	public CrashTrigger(String criteria, int maxAmount, int[] versionMinimum, int[] versionMaximum, Trigger trigger) {
 		this.criteria = criteria;
 		this.maxAmount = maxAmount;
 		this.versionMinimum = versionMinimum;
@@ -53,11 +54,11 @@ public class CrashTrigger {
 		this.maxAmount = maxAmount;
 	}
 
-	public int getVersionMinimum() {
+	public int[] getVersionMinimum() {
 		return versionMinimum;
 	}
 
-	public int getVersionMaximum() {
+	public int[] getVersionMaximum() {
 		return versionMaximum;
 	}
 }
