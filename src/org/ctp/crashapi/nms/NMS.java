@@ -1,5 +1,6 @@
 package org.ctp.crashapi.nms;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.bukkit.Location;
@@ -106,6 +107,25 @@ public class NMS {
 			return (Inventory) m2.invoke(c.cast(o));
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static void invokeAccessible(Method m, Object clazz, Object...args) {
+		m.setAccessible(true);
+		try {
+			m.invoke(clazz, args);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static Object returnAccessible(Method m, Object clazz, Object...args) {
+		m.setAccessible(true);
+		try {
+			return m.invoke(clazz, args);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

@@ -1,9 +1,7 @@
 package org.ctp.crashapi.nms;
 
 import org.bukkit.entity.Entity;
-import org.ctp.crashapi.nms.mob.Mob_1;
-import org.ctp.crashapi.nms.mob.Mob_2;
-import org.ctp.crashapi.nms.mob.Mob_v1_16_R3;
+import org.ctp.crashapi.nms.mob.*;
 
 public class MobNMS extends NMS {
 	
@@ -23,7 +21,8 @@ public class MobNMS extends NMS {
 			case 16:
 				return Mob_v1_16_R3.setNBTData(entity, s);
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 18, 0)) return Mob_2.setNBTData(entity, s);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 0)) return Mob_3.setNBTData(entity, s);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 18, 0)) return Mob_2.setNBTData(entity, s);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 17, 0)) return Mob_1.setNBTData(entity, s);
 		}
 		return entity;

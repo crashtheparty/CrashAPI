@@ -11,6 +11,7 @@ import org.ctp.crashapi.nms.NMS;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.sounds.SoundEffect;
 import net.minecraft.world.level.block.SoundEffectType;
+import net.minecraft.world.level.block.state.IBlockData;
 
 public class Item_1 extends NMS {
 
@@ -51,28 +52,38 @@ public class Item_1 extends NMS {
 
 	public static BlockSound getSound(Block block, String key) {
 		net.minecraft.world.level.block.Block b = getBlock(block);
-		SoundEffectType type = b.m(b.n());
-		SoundEffect effect = null;
-		switch(key.toLowerCase(Locale.ROOT)) {
-			case "break":
-				effect = type.c();
-				break;
-			case "step":
-				effect = type.d();
-				break;
-			case "place":
-				effect = type.e();
-				break;
-			case "hit":
-				effect = type.f();
-				break;
-			case "fall":
-				effect = type.g();
-				break;
-			default:
-				effect = type.c();
-		}
+		try {
+			Class<?> clazz = b.getClass();
+			Method m1 = clazz.getDeclaredMethod("m", IBlockData.class);
+			Method m2 = clazz.getDeclaredMethod("n");
+			Object o = m1.invoke(b, (IBlockData) m2.invoke(b));
+			if (o instanceof SoundEffectType) {
+				SoundEffectType type = (SoundEffectType) o;
+				SoundEffect effect = null;
+				switch(key.toLowerCase(Locale.ROOT)) {
+					case "break":
+						effect = type.c();
+						break;
+					case "step":
+						effect = type.d();
+						break;
+					case "place":
+						effect = type.e();
+						break;
+					case "hit":
+						effect = type.f();
+						break;
+					case "fall":
+						effect = type.g();
+						break;
+					default:
+						effect = type.c();
+				}
+				Class<?> eff = SoundEffectType.class;
 
-		return new BlockSound(effect.a().a(), type.ay, type.az);
+				return new BlockSound(effect.a().a(), eff.getDeclaredField("ay").getFloat(type), eff.getDeclaredField("az").getFloat(type));
+			}
+		} catch (Exception ex) {}
+		return null;
 	}
 }

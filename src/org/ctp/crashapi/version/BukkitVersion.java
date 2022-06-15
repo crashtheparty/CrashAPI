@@ -147,7 +147,7 @@ public class BukkitVersion {
 	}
 
 	public boolean isSimilarOrAbove(int[] version, int i, int j, int k) {
-		return version[0] >= i && version[1] >= j && version[2] >= k;
+		return version[0] > i || version[0] == i && version[1] > j || version[0] == i && version[1] == j && version[2] >= k;
 	}
 
 	public boolean isVersionAllowed() {

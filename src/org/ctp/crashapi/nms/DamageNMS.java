@@ -3,9 +3,7 @@ package org.ctp.crashapi.nms;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.ctp.crashapi.nms.damage.Damage_1;
-import org.ctp.crashapi.nms.damage.Damage_2;
-import org.ctp.crashapi.nms.damage.Damage_v1_16_R3;
+import org.ctp.crashapi.nms.damage.*;
 
 public class DamageNMS extends NMS{
 
@@ -38,7 +36,9 @@ public class DamageNMS extends NMS{
 			case 16:
 				return Damage_v1_16_R3.getArrowDamage(entity, arrow);
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 18, 0)) return Damage_2.getArrowDamage(entity, arrow);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 0)) return Damage_4.getArrowDamage(entity, arrow);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 18, 2)) return Damage_3.getArrowDamage(entity, arrow);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 18, 0)) return Damage_2.getArrowDamage(entity, arrow);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 17, 0)) return Damage_1.getArrowDamage(entity, arrow);
 		}
 		return 0;
@@ -50,7 +50,9 @@ public class DamageNMS extends NMS{
 				Damage_v1_16_R3.updateHealth(entity);
 				break;
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 18, 0)) Damage_2.updateHealth(entity);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 0)) Damage_4.updateHealth(entity);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 18, 2)) Damage_3.updateHealth(entity);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 18, 0)) Damage_2.updateHealth(entity);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 17, 0)) Damage_1.updateHealth(entity);
 				break;
 		}

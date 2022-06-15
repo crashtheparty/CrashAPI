@@ -36,7 +36,8 @@ public class ItemNMS extends NMS {
 			case 16:
 				return Item_v1_16_R3.getSound(b, s);
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 17, 0)) return Item_1.getSound(b, s);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 0)) return Item_2.getSound(b, s);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 17, 0)) return Item_1.getSound(b, s);
 		}
 		return new BlockSound("", 1, 1);
 	}
