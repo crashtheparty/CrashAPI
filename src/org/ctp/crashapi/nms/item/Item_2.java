@@ -51,17 +51,16 @@ public class Item_2 extends NMS {
 	}
 
 	public static BlockSound getSound(Block block, String key) {
-
 		net.minecraft.world.level.block.Block b = getBlock(block);
 		try {
-			Class<?> clazz = b.getClass();
+			Class<?> clazz = net.minecraft.world.level.block.Block.class;
 			Method m1 = clazz.getDeclaredMethod("m", IBlockData.class);
 			Method m2 = clazz.getDeclaredMethod("m");
 			Object o = m1.invoke(b, (IBlockData) m2.invoke(b));
 			if (o instanceof SoundEffectType) {
 				SoundEffectType type = (SoundEffectType) o;
 				SoundEffect effect = null;
-				switch(key.toLowerCase(Locale.ROOT)) {
+				switch (key.toLowerCase(Locale.ROOT)) {
 					case "break":
 						effect = type.c();
 						break;
@@ -84,7 +83,9 @@ public class Item_2 extends NMS {
 
 				return new BlockSound(effect.a().a(), eff.getDeclaredField("aJ").getFloat(type), eff.getDeclaredField("aK").getFloat(type));
 			}
-		} catch (Exception ex) {}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
 }

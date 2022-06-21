@@ -69,8 +69,8 @@ public class Damage_1 extends NMS {
 			Class<?> cArrow = EntityArrow.class;
 			Method dm = cArrow.getDeclaredMethod("getDamage");
 			Object dmo = dm.invoke(arrow);
-			if (dmo instanceof Number) {
-				int i = MathHelper.e(Math.max(f * (Integer) dmo, 0.0D));
+			if (dmo instanceof Double) {
+				int i = MathHelper.e(Math.max(f * (int) ((Double) dmo).doubleValue(), 0.0D));
 				arrow.a(entity, i);
 				return (int) dm.invoke(arrow) / 2;
 			}

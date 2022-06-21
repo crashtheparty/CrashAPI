@@ -53,7 +53,7 @@ public class Item_1 extends NMS {
 	public static BlockSound getSound(Block block, String key) {
 		net.minecraft.world.level.block.Block b = getBlock(block);
 		try {
-			Class<?> clazz = b.getClass();
+			Class<?> clazz = net.minecraft.world.level.block.Block.class;
 			Method m1 = clazz.getDeclaredMethod("m", IBlockData.class);
 			Method m2 = clazz.getDeclaredMethod("n");
 			Object o = m1.invoke(b, (IBlockData) m2.invoke(b));
@@ -83,7 +83,9 @@ public class Item_1 extends NMS {
 
 				return new BlockSound(effect.a().a(), eff.getDeclaredField("ay").getFloat(type), eff.getDeclaredField("az").getFloat(type));
 			}
-		} catch (Exception ex) {}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
 }
