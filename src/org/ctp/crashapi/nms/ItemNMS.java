@@ -3,9 +3,7 @@ package org.ctp.crashapi.nms;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.ctp.crashapi.item.BlockSound;
-import org.ctp.crashapi.nms.item.Item_1;
-import org.ctp.crashapi.nms.item.Item_2;
-import org.ctp.crashapi.nms.item.Item_v1_16_R3;
+import org.ctp.crashapi.nms.item.*;
 
 public class ItemNMS extends NMS {
 
@@ -36,7 +34,10 @@ public class ItemNMS extends NMS {
 			case 16:
 				return Item_v1_16_R3.getSound(b, s);
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 0)) return Item_2.getSound(b, s);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 0)) return Item_5.getSound(b, s);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 4)) return Item_4.getSound(b, s);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 3)) return Item_3.getSound(b, s);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 0)) return Item_2.getSound(b, s);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 17, 0)) return Item_1.getSound(b, s);
 		}
 		return new BlockSound("", 1, 1);

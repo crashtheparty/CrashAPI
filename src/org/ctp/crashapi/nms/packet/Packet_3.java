@@ -17,8 +17,8 @@ import net.minecraft.network.protocol.game.PacketPlayOutBlockBreakAnimation;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.server.network.PlayerConnection;
 
-public class Packet_1 extends NMS {
-	
+public class Packet_3 extends NMS {
+
 	public static int addParticle(Block block, int stage) {
 		int rand = Math.abs(new Random().nextInt());
 		PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(rand, new BlockPosition(block.getX(), block.getY(), block.getZ()), stage);
@@ -28,7 +28,7 @@ public class Packet_1 extends NMS {
 
 			try {
 				Class<?> clazz = EntityPlayer.class;
-				Field f = clazz.getDeclaredField("b");
+				Field f = clazz.getDeclaredField("c");
 				if (f.get(p) instanceof PlayerConnection) pc = (PlayerConnection) f.get(p);
 				else
 					ChatUtils.getUtils(CrashAPI.getPlugin()).sendInfo("Issue with Packet NMS - Player Connection not found");
@@ -38,7 +38,7 @@ public class Packet_1 extends NMS {
 			Class<?> c = pc.getClass();
 			Method m;
 			try {
-				m = c.getDeclaredMethod("sendPacket", Packet.class);
+				m = c.getDeclaredMethod("a", Packet.class);
 				m.invoke(pc, packet);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -55,7 +55,7 @@ public class Packet_1 extends NMS {
 
 			try {
 				Class<?> clazz = EntityPlayer.class;
-				Field f = clazz.getDeclaredField("b");
+				Field f = clazz.getDeclaredField("c");
 				if (f.get(p) instanceof PlayerConnection) pc = (PlayerConnection) f.get(p);
 				else
 					ChatUtils.getUtils(CrashAPI.getPlugin()).sendInfo("Issue with Packet NMS - Player Connection not found");
@@ -65,7 +65,7 @@ public class Packet_1 extends NMS {
 			Class<?> c = pc.getClass();
 			Method m;
 			try {
-				m = c.getDeclaredMethod("sendPacket", Packet.class);
+				m = c.getDeclaredMethod("a", Packet.class);
 				m.invoke(pc, packet);
 			} catch (Exception ex) {
 				ex.printStackTrace();

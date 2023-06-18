@@ -1,11 +1,14 @@
 package org.ctp.crashapi.nms.damage;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.ctp.crashapi.CrashAPI;
 import org.ctp.crashapi.nms.NMS;
+import org.ctp.crashapi.utils.ChatUtils;
 
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.util.MathHelper;
@@ -19,39 +22,44 @@ import net.minecraft.world.phys.Vec3D;
 public class Damage_1 extends NMS {
 
 	public static void damageEntity(LivingEntity e, String cause, float damage) {
-		DamageSource source = DamageSource.n;
-		switch (cause) {
-			case "drown":
-				source = DamageSource.h;
-		}
 		try {
-			Class<?> c = Entity.class;
-			Method m = c.getDeclaredMethod("damageEntity", DamageSource.class, float.class);
-			m.invoke(getCraftBukkitEntity(e), source, damage);
+			Class<?> c = Class.forName("net.minecraft.world.damagesource.DamageSource");
+			Field f = c.getDeclaredField("n"); // generic
+			switch (cause) {
+				case "drown":
+					f = c.getDeclaredField("h");
+			}
+			if (f.get(null) instanceof DamageSource) {
+				Class<?> c1 = Entity.class;
+				Method m1 = c1.getDeclaredMethod("damageEntity", DamageSource.class, float.class);
+				m1.invoke(getCraftBukkitEntity(e), f.get(null), damage);
+			}
+			else
+				ChatUtils.getUtils(CrashAPI.getPlugin()).sendInfo("Issue with DamageEntity NMS - field not a damage source");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 	public static void damageEntity(LivingEntity e, Player p, String cause, float damage) {
-		DamageSource source = DamageSource.n;
-		Entity entity = getCraftBukkitEntity(e);
-		EntityPlayer player = (EntityPlayer) getCraftBukkitEntity(p);
-		switch (cause) {
-			case "arrow":
-				try {
-					Class<?> c = DamageSource.class;
-					Method m = c.getDeclaredMethod("playerAttack", EntityHuman.class);
-					Object o = m.invoke(null, player);
-					if (o instanceof DamageSource) source = (DamageSource) o;
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-		}
 		try {
-			Class<?> c = Entity.class;
-			Method m = c.getDeclaredMethod("damageEntity", DamageSource.class, float.class);
-			m.invoke(entity, source, damage);
+			Class<?> c = Class.forName("net.minecraft.world.damagesource.DamageSource");
+			Field f = c.getDeclaredField("n"); // generic
+			if (f.get(null) instanceof DamageSource) {
+				DamageSource source = (DamageSource) f.get(null);
+				Entity entity = getCraftBukkitEntity(e);
+				EntityPlayer player = (EntityPlayer) getCraftBukkitEntity(p);
+				switch (cause) {
+					case "arrow":
+						Class<?> c1 = DamageSource.class;
+						Method m1 = c1.getDeclaredMethod("playerAttack", EntityHuman.class);
+						Object o1 = m1.invoke(null, player);
+						if (o1 instanceof DamageSource) source = (DamageSource) o1;
+				}
+				Class<?> c2 = Entity.class;
+				Method m2 = c2.getDeclaredMethod("damageEntity", DamageSource.class, float.class);
+				m2.invoke(entity, source, damage);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -70,9 +78,9 @@ public class Damage_1 extends NMS {
 			Method dm = cArrow.getDeclaredMethod("getDamage");
 			Object dmo = dm.invoke(arrow);
 			if (dmo instanceof Double) {
-				int i = MathHelper.e(Math.max(f * (int) ((Double) dmo).doubleValue(), 0.0D));
+				int i = (int) MathHelper.e((float) Math.max(f * (int) ((Double) dmo).doubleValue(), 0.0D));
 				arrow.a(entity, i);
-				return (int) dm.invoke(arrow) / 2;
+				return (int) ((Double) dm.invoke(arrow)).doubleValue() / 2;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -1,11 +1,17 @@
 package org.ctp.crashapi.nms;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.ctp.crashapi.CrashAPI;
 
@@ -16,7 +22,7 @@ import net.minecraft.world.level.block.state.IBlockData;
 import net.minecraft.world.phys.Vec3D;
 
 public class NMS {
-	
+
 	public static int getVersionNumber() {
 		return CrashAPI.getPlugin().getBukkitVersion().getVersionNumber();
 	}
@@ -32,8 +38,8 @@ public class NMS {
 	public static boolean isSimilarOrAbove(int[] version, int i, int j, int k) {
 		return CrashAPI.getPlugin().getBukkitVersion().isSimilarOrAbove(version, i, j, k);
 	}
-	
-	public static net.minecraft.world.level.block.Block getBlock(Block b){
+
+	public static net.minecraft.world.level.block.Block getBlock(Block b) {
 		try {
 			Class<?> c = Class.forName("org.bukkit.craftbukkit." + getVersion() + ".block.CraftBlock");
 			Method m = c.getDeclaredMethod("getNMS");
@@ -44,8 +50,8 @@ public class NMS {
 		}
 		return null;
 	}
-	
-	public static net.minecraft.world.phys.Vec3D getLocation(Location l){
+
+	public static net.minecraft.world.phys.Vec3D getLocation(Location l) {
 		return new Vec3D(l.getX(), l.getY(), l.getZ());
 	}
 
@@ -72,7 +78,7 @@ public class NMS {
 		}
 		return null;
 	}
-	
+
 	public static Entity getCraftBukkitEntity(org.bukkit.entity.Entity entity) {
 		try {
 			Class<?> c = Class.forName("org.bukkit.craftbukkit." + getVersion() + ".entity.CraftEntity");
@@ -84,7 +90,7 @@ public class NMS {
 		}
 		return null;
 	}
-	
+
 	public static WorldServer getCraftBukkitWorld(org.bukkit.World world) {
 		try {
 			Class<?> c = Class.forName("org.bukkit.craftbukkit." + getVersion() + ".CraftWorld");
@@ -96,7 +102,7 @@ public class NMS {
 		}
 		return null;
 	}
-	
+
 	public static Inventory getInventory(ContainerAnvil container) {
 		// Set the items to the items from the inventory given
 		try {
@@ -110,8 +116,8 @@ public class NMS {
 		}
 		return null;
 	}
-	
-	public static void invokeAccessible(Method m, Object clazz, Object...args) {
+
+	public static void invokeAccessible(Method m, Object clazz, Object... args) {
 		m.setAccessible(true);
 		try {
 			m.invoke(clazz, args);
@@ -119,8 +125,8 @@ public class NMS {
 			e.printStackTrace();
 		}
 	}
-	
-	public static Object returnAccessible(Method m, Object clazz, Object...args) {
+
+	public static Object returnAccessible(Method m, Object clazz, Object... args) {
 		m.setAccessible(true);
 		try {
 			return m.invoke(clazz, args);
@@ -128,5 +134,28 @@ public class NMS {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static EnchantItemEvent enchantItemEvent(Player enchanter, InventoryView view, Block table, ItemStack item, int level,
+	Map<Enchantment, Integer> enchants, int i, Enchantment hint, int enchantLevel) {
+		EnchantItemEvent event = null;
+		try {
+			Class<?> c = EnchantItemEvent.class;
+			Constructor<?> con = null;
+			Object instance = null;
+			if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 1)) {
+				con = c.getConstructor(Player.class, InventoryView.class, Block.class, ItemStack.class, int.class, java.util.Map.class, Enchantment.class, int.class, int.class);
+				instance = con.newInstance(enchanter, view, table, item, level, enchants, hint, enchantLevel, i);
+				if (instance instanceof EnchantItemEvent) event = (EnchantItemEvent) instance;
+			} else {
+				con = c.getConstructor(Player.class, InventoryView.class, Block.class, ItemStack.class, int.class, java.util.Map.class, int.class);
+				instance = con.newInstance(enchanter, view, table, item, level, enchants, i);
+				if (instance instanceof EnchantItemEvent) event = (EnchantItemEvent) instance;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return event;
 	}
 }

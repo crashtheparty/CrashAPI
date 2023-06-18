@@ -11,7 +11,7 @@ public class EnchantmentData {
 	public EnchantmentData(String name) {
 		enchantName = name.toUpperCase();
 		try {
-			enchant = Enchantment.getByKey(NamespacedKey.minecraft(name));
+			enchant = Enchantment.getByKey(NamespacedKey.minecraft(name.toLowerCase()));
 		} catch (Exception ex) {}
 	}
 
