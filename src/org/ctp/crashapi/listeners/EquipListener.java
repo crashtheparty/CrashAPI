@@ -25,6 +25,24 @@ import org.ctp.crashapi.utils.DamageUtils;
  * @since Jul 30, 2015
  */
 public class EquipListener implements Listener {
+	
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onWorldChange(final PlayerChangedWorldEvent event) {
+		Player player = event.getPlayer();
+		
+		ItemStack mainHand = player.getInventory().getItemInMainHand();
+		EquipEvent e = new EquipEvent(event.getPlayer(), EquipMethod.JOIN, ItemSlotType.MAIN_HAND, mainHand, mainHand);
+		Bukkit.getServer().getPluginManager().callEvent(e);
+
+		ItemStack offHand = player.getInventory().getItemInOffHand();
+		e = new EquipEvent(event.getPlayer(), EquipMethod.JOIN, ItemSlotType.MAIN_HAND, offHand, offHand);
+		Bukkit.getServer().getPluginManager().callEvent(e);
+		
+		for(ItemStack item: player.getInventory().getArmorContents()) {
+			ItemSlotType type = ItemSlotType.matchArmorType(item);
+			if (type != null) Bukkit.getServer().getPluginManager().callEvent(new EquipEvent(player, EquipMethod.JOIN, type, item, item));
+		}
+	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInventoryClickArmor(final InventoryClickEvent e) {
