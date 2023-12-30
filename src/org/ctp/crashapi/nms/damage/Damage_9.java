@@ -14,7 +14,7 @@ import net.minecraft.world.entity.EntityLiving;
 import net.minecraft.world.entity.projectile.EntityArrow;
 import net.minecraft.world.phys.Vec3D;
 
-public class Damage_7 extends NMS {
+public class Damage_9 extends NMS {
 
 	public static double getArrowDamage(LivingEntity le, AbstractArrow a) {
 		EntityArrow arrow = (EntityArrow) getCraftBukkitEntity(a);
@@ -22,13 +22,13 @@ public class Damage_7 extends NMS {
 		float f = 1;
 		try {
 			Class<?> c = Entity.class;
-			Method m = c.getDeclaredMethod("dj");
+			Method m = c.getDeclaredMethod("do");
 			Object o = m.invoke(arrow);
 			if (o instanceof Vec3D) f = (float) ((Vec3D) o).f();
 			else
 				ChatUtils.getUtils(CrashAPI.getPlugin()).sendInfo("Issue with Hollow Point NMS - getDeltaMovement() not found");
 			Class<?> cArrow = EntityArrow.class;
-			Method dm = cArrow.getDeclaredMethod("p");
+			Method dm = cArrow.getDeclaredMethod("x");
 			Object dmo = dm.invoke(arrow);
 			if (dmo instanceof Number) {
 				int i = (int) MathHelper.e((float) Math.max(f * (int) ((Double) dmo).doubleValue(), 0.0D));
@@ -49,7 +49,7 @@ public class Damage_7 extends NMS {
 			EntityLiving living = (EntityLiving) entity;
 			try {
 				Class<?> c = EntityLiving.class;
-				Method m1 = c.getMethod("eo");
+				Method m1 = c.getMethod("eu");
 				Object o1 = m1.invoke(living);
 				Method m2 = c.getMethod("c", float.class);
 				if (o1 instanceof Number) m2.invoke(living, (float) o1);

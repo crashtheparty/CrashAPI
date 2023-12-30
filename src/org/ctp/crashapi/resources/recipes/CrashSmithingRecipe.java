@@ -1,8 +1,8 @@
 package org.ctp.crashapi.resources.recipes;
 
-import org.ctp.crashapi.resources.util.CrashValidate;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
+import org.ctp.crashapi.resources.util.CrashValidate;
 import org.ctp.crashapi.resources.util.JsonBuilder;
 import org.ctp.crashapi.resources.util.RecipeModificationResult;
 
@@ -86,6 +86,7 @@ public class CrashSmithingRecipe implements CrashRecipe {
 		this.add = add;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Recipe getRecipe() {
 		SmithingRecipe r = new SmithingRecipe(id, item, base, add);

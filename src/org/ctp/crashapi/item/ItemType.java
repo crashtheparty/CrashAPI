@@ -53,7 +53,11 @@ public class ItemType {
 	BIRCH_PLANKS = new ItemType("birch_planks"), DARK_OAK_PLANKS = new ItemType("dark_oak_planks"), JUNGLE_PLANKS = new ItemType("jungle_planks"),
 	OAK_PLANKS = new ItemType("oak_planks"), SPRUCE_PLANKS = new ItemType("spruce_planks"), LEATHER = new ItemType("leather"),
 	PHANTOM_MEMBRANE = new ItemType("phantom_membrane"), STRING = new ItemType("string"), NETHERITE_INGOT = new ItemType("netherite_ingot"),
-	BLACKSTONE = new ItemType("blackstone"), CRIMSON_PLANKS = new ItemType("crimson_planks"), WARPED_PLANKS = new ItemType("warped_planks");
+	BLACKSTONE = new ItemType("blackstone"), CRIMSON_PLANKS = new ItemType("crimson_planks"), WARPED_PLANKS = new ItemType("warped_planks"),
+	DIAMOND_WEAPONS = new ItemType("diamond_weapons"), DIAMOND_ITEMS = new ItemType("diamond_items"), IRON_WEAPONS = new ItemType("iron_weapons"),
+	IRON_ITEMS = new ItemType("iron_items"), GOLDEN_WEAPONS = new ItemType("golden_weapons"), GOLDEN_ITEMS = new ItemType("golden_items"),
+	NETHERITE_WEAPONS = new ItemType("netherite_weapons"), NETHERITE_ITEMS = new ItemType("netherite_items"), STONE_WEAPONS = new ItemType("stone_weapons"),
+	STONE_ITEMS = new ItemType("stone_items"), WOODEN_WEAPONS = new ItemType("wooden_weapons"), WOODEN_ITEMS = new ItemType("wooden_items");
 
 	private String type, display;
 	private List<ItemData> enchantMaterials, anvilMaterials;
@@ -340,11 +344,19 @@ public class ItemType {
 				i.addAll(getEnchantables(DIAMOND_HELMET.getType()));
 				i.addAll(getEnchantables(DIAMOND_LEGGINGS.getType()));
 				break;
+			case "DIAMOND_ITEMS":
+				i.addAll(getEnchantables(DIAMOND_TOOLS.getType()));
+				i.addAll(getEnchantables(DIAMOND_WEAPONS.getType()));
+				break;
 			case "DIAMOND_TOOLS":
 				i.addAll(getEnchantables(DIAMOND_AXE.getType()));
 				i.addAll(getEnchantables(DIAMOND_HOE.getType()));
 				i.addAll(getEnchantables(DIAMOND_PICKAXE.getType()));
 				i.addAll(getEnchantables(DIAMOND_SHOVEL.getType()));
+				break;
+			case "DIAMOND_WEAPONS":
+				i.addAll(getEnchantables(DIAMOND_AXE.getType()));
+				i.addAll(getEnchantables(DIAMOND_SWORD.getType()));
 				break;
 			case "ENCHANTABLE":
 				i.addAll(getEnchantables(ARMOR.getType()));
@@ -366,11 +378,19 @@ public class ItemType {
 				i.addAll(getEnchantables(GOLDEN_HELMET.getType()));
 				i.addAll(getEnchantables(GOLDEN_LEGGINGS.getType()));
 				break;
+			case "GOLDEN_ITEMS":
+				i.addAll(getEnchantables(GOLDEN_TOOLS.getType()));
+				i.addAll(getEnchantables(GOLDEN_WEAPONS.getType()));
+				break;
 			case "GOLDEN_TOOLS":
 				i.addAll(getEnchantables(GOLDEN_AXE.getType()));
 				i.addAll(getEnchantables(GOLDEN_HOE.getType()));
 				i.addAll(getEnchantables(GOLDEN_PICKAXE.getType()));
 				i.addAll(getEnchantables(GOLDEN_SHOVEL.getType()));
+				break;
+			case "GOLDEN_WEAPONS":
+				i.addAll(getEnchantables(GOLDEN_AXE.getType()));
+				i.addAll(getEnchantables(GOLDEN_SWORD.getType()));
 				break;
 			case "HELMETS":
 				i.addAll(getEnchantables(CHAINMAIL_HELMET.getType()));
@@ -395,11 +415,19 @@ public class ItemType {
 				i.addAll(getEnchantables(IRON_HELMET.getType()));
 				i.addAll(getEnchantables(IRON_LEGGINGS.getType()));
 				break;
+			case "IRON_ITEMS":
+				i.addAll(getEnchantables(IRON_TOOLS.getType()));
+				i.addAll(getEnchantables(IRON_WEAPONS.getType()));
+				break;
 			case "IRON_TOOLS":
 				i.addAll(getEnchantables(IRON_AXE.getType()));
 				i.addAll(getEnchantables(IRON_HOE.getType()));
 				i.addAll(getEnchantables(IRON_PICKAXE.getType()));
 				i.addAll(getEnchantables(IRON_SHOVEL.getType()));
+				break;
+			case "IRON_WEAPONS":
+				i.addAll(getEnchantables(IRON_AXE.getType()));
+				i.addAll(getEnchantables(IRON_SWORD.getType()));
 				break;
 			case "LEATHER_ARMOR":
 				i.addAll(getEnchantables(LEATHER_BOOTS.getType()));
@@ -434,11 +462,19 @@ public class ItemType {
 				i.addAll(getEnchantables(NETHERITE_HELMET.getType()));
 				i.addAll(getEnchantables(NETHERITE_LEGGINGS.getType()));
 				break;
+			case "NETHERITE_ITEMS":
+				i.addAll(getEnchantables(NETHERITE_TOOLS.getType()));
+				i.addAll(getEnchantables(NETHERITE_WEAPONS.getType()));
+				break;
 			case "NETHERITE_TOOLS":
 				i.addAll(getEnchantables(NETHERITE_AXE.getType()));
 				i.addAll(getEnchantables(NETHERITE_HOE.getType()));
 				i.addAll(getEnchantables(NETHERITE_PICKAXE.getType()));
 				i.addAll(getEnchantables(NETHERITE_SHOVEL.getType()));
+				break;
+			case "NETHERITE_WEAPONS":
+				i.addAll(getEnchantables(NETHERITE_AXE.getType()));
+				i.addAll(getEnchantables(NETHERITE_SWORD.getType()));
 				break;
 			case "OTHER":
 				i.addAll(getEnchantables(ALL.getType()));
@@ -467,11 +503,19 @@ public class ItemType {
 				i.addAll(getEnchantables(STONE_SHOVEL.getType()));
 				i.addAll(getEnchantables(WOODEN_SHOVEL.getType()));
 				break;
+			case "STONE_ITEMS":
+				i.addAll(getEnchantables(STONE_TOOLS.getType()));
+				i.addAll(getEnchantables(STONE_WEAPONS.getType()));
+				break;
 			case "STONE_TOOLS":
 				i.addAll(getEnchantables(STONE_AXE.getType()));
 				i.addAll(getEnchantables(STONE_HOE.getType()));
 				i.addAll(getEnchantables(STONE_PICKAXE.getType()));
 				i.addAll(getEnchantables(STONE_SHOVEL.getType()));
+				break;
+			case "STONE_WEAPONS":
+				i.addAll(getEnchantables(STONE_AXE.getType()));
+				i.addAll(getEnchantables(STONE_SWORD.getType()));
 				break;
 			case "SWORDS":
 				i.addAll(getEnchantables(DIAMOND_SWORD.getType()));
@@ -487,11 +531,19 @@ public class ItemType {
 				i.addAll(getEnchantables(SHOVELS.getType()));
 				i.addAll(getEnchantables(PICKAXES.getType()));
 				break;
+			case "WOODEN_ITEMS":
+				i.addAll(getEnchantables(WOODEN_TOOLS.getType()));
+				i.addAll(getEnchantables(WOODEN_WEAPONS.getType()));
+				break;
 			case "WOODEN_TOOLS":
 				i.addAll(getEnchantables(WOODEN_AXE.getType()));
 				i.addAll(getEnchantables(WOODEN_HOE.getType()));
 				i.addAll(getEnchantables(WOODEN_PICKAXE.getType()));
 				i.addAll(getEnchantables(WOODEN_SHOVEL.getType()));
+				break;
+			case "WOODEN_WEAPONS":
+				i.addAll(getEnchantables(WOODEN_AXE.getType()));
+				i.addAll(getEnchantables(WOODEN_SWORD.getType()));
 				break;
 		}
 		Set<String> set = new LinkedHashSet<>();

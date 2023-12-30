@@ -113,4 +113,14 @@ public class YamlInfo {
 		}
 	}
 
+	public long getLong() {
+		if (value instanceof Long) return ((Long) value).longValue();
+		return 0;
+	}
+	
+	public Long getLongValue() {
+		if (value instanceof Long) return ((Long) value).longValue();
+		return null;
+	}
+
 }

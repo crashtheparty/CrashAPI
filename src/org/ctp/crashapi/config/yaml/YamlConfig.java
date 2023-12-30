@@ -88,6 +88,8 @@ public class YamlConfig {
 
 		if (info.getBooleanValue() != null) return info.getBooleanValue().toString();
 
+		if (info.getLongValue() != null) return info.getLongValue().toString();
+
 		if (info.getInteger() != null) return info.getInteger().toString();
 
 		if (info.getDoubleValue() != null) return info.getDoubleValue().toString();
@@ -110,6 +112,8 @@ public class YamlConfig {
 		}
 
 		if (info.getBooleanValue() != null) return "boolean";
+
+		if (info.getLongValue() != null) return "long";
 
 		if (info.getInteger() != null) return "integer";
 
@@ -135,6 +139,9 @@ public class YamlConfig {
 				break;
 			case "integer":
 				if ((info.getInt() + "").equals(value.toString())) return true;
+				break;
+			case "long":
+				if ((info.getLong() + "").equals(value.toString())) return true;
 				break;
 			case "double":
 				if ((info.getDouble() + "").equals(value.toString())) return true;
@@ -221,6 +228,24 @@ public class YamlConfig {
 		YamlInfo info = getInfo(path);
 		if (info == null) return null;
 		return info.getInteger();
+	}
+
+	public long getLong(String path) {
+		YamlInfo info = getInfo(path);
+		if (info == null) return 0;
+		return info.getLong();
+	}
+
+	public long getLong(String path, long def) {
+		YamlInfo info = getInfo(path);
+		if (info == null) return def;
+		return info.getLong();
+	}
+
+	public Long getLongValue(String path) {
+		YamlInfo info = getInfo(path);
+		if (info == null) return null;
+		return info.getLongValue();
 	}
 
 	public boolean getBoolean(String path) {

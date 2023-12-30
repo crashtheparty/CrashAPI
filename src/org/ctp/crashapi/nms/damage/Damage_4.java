@@ -2,7 +2,7 @@ package org.ctp.crashapi.nms.damage;
 
 import java.lang.reflect.Method;
 
-import org.bukkit.entity.Arrow;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.ctp.crashapi.CrashAPI;
@@ -68,7 +68,7 @@ public class Damage_4 extends NMS {
 		}
 	}
 
-	public static double getArrowDamage(LivingEntity le, Arrow a) {
+	public static double getArrowDamage(LivingEntity le, AbstractArrow a) {
 		EntityArrow arrow = (EntityArrow) getCraftBukkitEntity(a);
 		EntityLiving entity = (EntityLiving) getCraftBukkitEntity(le);
 		float f = 0;

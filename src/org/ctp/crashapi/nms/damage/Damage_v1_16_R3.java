@@ -1,7 +1,7 @@
 package org.ctp.crashapi.nms.damage;
 
 import org.bukkit.craftbukkit.v1_16_R3.entity.*;
-import org.bukkit.entity.Arrow;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -29,7 +29,7 @@ public class Damage_v1_16_R3 {
 		entity.damageEntity(source, damage);
 	}
 
-	public static double getArrowDamage(LivingEntity le, Arrow a) {
+	public static double getArrowDamage(LivingEntity le, AbstractArrow a) {
 		EntityArrow arrow = ((CraftArrow) a).getHandle();
 		EntityLiving entity = ((CraftLivingEntity) le).getHandle();
 		float f = (float) arrow.getMot().f();

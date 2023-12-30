@@ -74,4 +74,13 @@ public class ItemData {
 			if (d.getMaterial() == material) return true;
 		return false;
 	}
+	
+	public static ItemData fromString(String s) {
+		String[] split = s.split(" ");
+		if (split.length == 3) {
+			MatData data = new MatData(split[0]);
+			if (data.hasMaterial()) return new ItemData(data.getMaterial(), split[1], split[2]);
+		}
+		return null;
+	}
 }
