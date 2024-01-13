@@ -1,20 +1,24 @@
 package org.ctp.crashapi.entity;
 
-import java.lang.reflect.Field;
+import java.net.URL;
+import java.util.Base64;
 import java.util.HashMap;
-import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.profile.PlayerProfile;
+import org.bukkit.profile.PlayerTextures;
 import org.ctp.crashapi.api.Configurations;
 import org.ctp.crashapi.utils.ChatUtils;
 import org.ctp.crashapi.utils.StringUtils;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public enum MobHeads {
 
@@ -211,20 +215,17 @@ public enum MobHeads {
 		try {
 			ItemMeta meta = item.getItemMeta();
 			SkullMeta skull = (SkullMeta) meta;
-
 			String name = Configurations.getConfigurations().getLanguage().getString("mobs." + name().toLowerCase());
 			if (name == null) name = name();
-			GameProfile gameProfile = new GameProfile(UUID.nameUUIDFromBytes(name().getBytes()), name);
-			gameProfile.getProperties().put("textures", new Property("textures", texture, id));
+			PlayerProfile profile = Bukkit.getServer().createPlayerProfile(name);
+			JsonObject object = new JsonParser().parse(new String(Base64.getDecoder().decode(texture))).getAsJsonObject();
+			JsonElement el = object.get("textures").getAsJsonObject().get("SKIN").getAsJsonObject().get("url");
+			URL url = new URL(el.getAsString());
+			PlayerTextures textures = profile.getTextures();
+			textures.setSkin(url);
+			profile.setTextures(textures);
+			skull.setOwnerProfile(profile);
 
-			Field profileField = null;
-			try {
-				profileField = skull.getClass().getDeclaredField("profile");
-				profileField.setAccessible(true);
-				profileField.set(skull, gameProfile);
-			} catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException exception) {
-				exception.printStackTrace();
-			}
 			item.setItemMeta(skull);
 		} catch (Exception ex) {
 			ex.printStackTrace();

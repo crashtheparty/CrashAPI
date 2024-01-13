@@ -22,16 +22,16 @@ public class LocationUtils {
 	public static boolean hasBlockAbove(Player player) {
 		for(int y = player.getLocation().getBlockY(); y < player.getWorld().getMaxHeight(); y++) {
 			Location loc = player.getLocation().clone().add(0, y, 0);
-			if (MatData.isAir(loc.getBlock().getType())) return true;
+			if (!MatData.isAir(loc.getBlock().getType())) return true;
 		}
 		return false;
 	}
 
 	public static boolean hasBlockBelow(Location location) {
-		for(int y = location.getBlockY(); y >= 0; y--) {
+		for(int y = location.getBlockY(); y >= location.getWorld().getMinHeight(); y--) {
 			Location loc = location.clone();
 			loc.setY(y);
-			if (MatData.isAir(loc.getBlock().getType())) return true;
+			if (!MatData.isAir(loc.getBlock().getType())) return true;
 		}
 		return false;
 	}
