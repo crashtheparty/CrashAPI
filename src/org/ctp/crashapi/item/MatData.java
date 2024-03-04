@@ -45,4 +45,13 @@ public class MatData {
 		}
 		return false;
 	}
+
+	public static boolean isBook(Material type) {
+		switch (type.name()) {
+			case "BOOK":
+			case "ENCHANTED_BOOK":
+				return true;
+		}
+		return false;
+	}
 }
