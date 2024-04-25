@@ -15,8 +15,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.ctp.crashapi.CrashAPI;
+import org.ctp.crashapi.data.items.MatData;
 import org.ctp.crashapi.events.ItemAddEvent;
-import org.ctp.crashapi.item.MatData;
 
 public class ItemEnterInventoryListener implements Listener {
 

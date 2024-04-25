@@ -41,7 +41,6 @@ public class Damage_6 extends NMS {
 	}
 
 	public static void damageEntity(LivingEntity e, Player p, String cause, float damage) {
-		ChatUtils.getUtils(CrashAPI.getPlugin()).sendInfo("Damage: " + damage);
 		try {
 			EntityLiving l = (EntityLiving) getCraftBukkitEntity(e);
 			DamageSource source = null;

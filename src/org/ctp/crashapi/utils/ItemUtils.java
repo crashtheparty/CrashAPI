@@ -15,10 +15,10 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.Vector;
 import org.ctp.crashapi.api.Configurations;
 import org.ctp.crashapi.compatibility.MMOUtils;
+import org.ctp.crashapi.data.items.*;
 import org.ctp.crashapi.events.EquipEvent;
 import org.ctp.crashapi.events.EquipEvent.EquipMethod;
 import org.ctp.crashapi.events.ItemAddEvent;
-import org.ctp.crashapi.item.*;
 
 public class ItemUtils {
 

@@ -21,7 +21,8 @@ public class MobNMS extends NMS {
 			case 16:
 				return Mob_v1_16_R3.setNBTData(entity, s);
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) return Mob_7.setNBTData(entity, s);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 5)) return Mob_8.setNBTData(entity, s);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) return Mob_7.setNBTData(entity, s);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 2)) return Mob_6.setNBTData(entity, s);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 0)) return Mob_5.setNBTData(entity, s);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 3)) return Mob_4.setNBTData(entity, s);

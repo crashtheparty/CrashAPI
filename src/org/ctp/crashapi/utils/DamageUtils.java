@@ -1,7 +1,6 @@
 package org.ctp.crashapi.utils;
 
 import org.bukkit.*;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerItemBreakEvent;
@@ -9,6 +8,8 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.ctp.crashapi.data.EnchantmentData;
+import org.ctp.crashapi.data.ParticleData;
 
 public class DamageUtils {
 
@@ -90,7 +91,7 @@ public class DamageUtils {
 		if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR) || !DamageUtils.isDamageable(item)) return new DamageResult(false, 0, DamageUtils.getDamage(item), DamageUtils.getDamage(item), DamageUtils.getMaxDamage(item));
 		int originalDamage = DamageUtils.getDamage(item);
 		int numBreaks = 0;
-		int unbreaking = item.getItemMeta().getEnchantLevel(Enchantment.DURABILITY);
+		int unbreaking = item.getItemMeta().getEnchantLevel(EnchantmentData.UNBREAKING);
 		for(int i = 0; i < damage; i++) {
 			double chance = 1.0D / (unbreaking + extraChance);
 			double random = Math.random();
@@ -112,7 +113,9 @@ public class DamageUtils {
 					Bukkit.getPluginManager().callEvent(event);
 					event.getBrokenItem().setAmount(0);
 					DamageUtils.setDamage(event.getBrokenItem(), 0);
-					player.getWorld().spawnParticle(Particle.ITEM_CRACK, player.getEyeLocation(), 1, item);
+					ParticleData part = new ParticleData("ITEM_CRACK");
+					if (part.getParticle() == null) part = new ParticleData("ITEM");
+					player.getWorld().spawnParticle(part.getParticle(), player.getEyeLocation(), 1, item);
 					player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
 					if (player instanceof Player) {
 						Player p = (Player) player;

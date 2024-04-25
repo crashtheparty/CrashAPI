@@ -1,4 +1,4 @@
-package org.ctp.crashapi.item;
+package org.ctp.crashapi.data;
 
 import org.bukkit.Sound;
 import org.bukkit.block.Block;

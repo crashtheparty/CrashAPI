@@ -1,4 +1,4 @@
-package org.ctp.crashapi.entity;
+package org.ctp.crashapi.data;
 
 import java.net.URL;
 import java.util.Base64;

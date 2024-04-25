@@ -6,7 +6,7 @@ import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_16_R3.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
-import org.ctp.crashapi.item.BlockSound;
+import org.ctp.crashapi.data.BlockSound;
 
 import net.minecraft.server.v1_16_R3.NBTTagCompound;
 import net.minecraft.server.v1_16_R3.SoundEffect;

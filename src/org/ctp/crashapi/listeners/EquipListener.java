@@ -14,10 +14,10 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.ctp.crashapi.data.items.ItemSlotType;
+import org.ctp.crashapi.data.items.MatData;
 import org.ctp.crashapi.events.EquipEvent;
 import org.ctp.crashapi.events.EquipEvent.EquipMethod;
-import org.ctp.crashapi.item.ItemSlotType;
-import org.ctp.crashapi.item.MatData;
 import org.ctp.crashapi.utils.DamageUtils;
 
 /**

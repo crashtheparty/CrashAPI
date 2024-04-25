@@ -1,4 +1,4 @@
-package org.ctp.crashapi.item;
+package org.ctp.crashapi.data.items;
 
 import java.util.List;
 

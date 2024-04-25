@@ -1,6 +1,6 @@
 package org.ctp.crashapi.nms.anvil;
 
-import org.ctp.crashapi.inventory.InventoryData;
+import org.ctp.crashapi.data.inventory.InventoryData;
 
 public class AnvilClickEvent {
 	private AnvilSlot slot;

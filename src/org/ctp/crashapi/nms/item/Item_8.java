@@ -11,14 +11,15 @@ import net.minecraft.sounds.SoundEffect;
 import net.minecraft.world.level.block.SoundEffectType;
 import net.minecraft.world.level.block.state.IBlockData;
 
-public class Item_4 extends NMS {
+public class Item_8 extends NMS {
 
 	public static BlockSound getSound(Block block, String key) {
 		net.minecraft.world.level.block.Block b = getBlock(block);
 		try {
-			Class<?> clazz = net.minecraft.world.level.block.Block.class;
-			Method m1 = clazz.getDeclaredMethod("m", IBlockData.class);
-			Method m2 = clazz.getDeclaredMethod("o");
+			Class<?> blockClazz = net.minecraft.world.level.block.state.BlockBase.class;
+			Class<?> blockStateClazz = net.minecraft.world.level.block.state.BlockBase.class;
+			Method m1 = blockStateClazz.getDeclaredMethod("g_", IBlockData.class);
+			Method m2 = blockClazz.getDeclaredMethod("o");
 			Object o = m1.invoke(b, (IBlockData) m2.invoke(b));
 			if (o instanceof SoundEffectType) {
 				SoundEffectType type = (SoundEffectType) o;
@@ -44,7 +45,7 @@ public class Item_4 extends NMS {
 				}
 				Class<?> eff = SoundEffectType.class;
 
-				return new BlockSound(effect.a().a(), eff.getDeclaredField("aW").getFloat(type), eff.getDeclaredField("aX").getFloat(type));
+				return new BlockSound(effect.a().a(), eff.getDeclaredField("bg").getFloat(type), eff.getDeclaredField("bh").getFloat(type));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -13,7 +13,8 @@ public class DamageNMS extends NMS{
 				Damage_v1_16_R3.damageEntity(entity, cause, damage);
 				break;
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) Damage_6.damageEntity(entity, cause, damage);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 5)) Damage_7.damageEntity(entity, cause, damage);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) Damage_6.damageEntity(entity, cause, damage);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 2)) Damage_5.damageEntity(entity, cause, damage);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 0)) Damage_4.damageEntity(entity, cause, damage);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 4)) Damage_3.damageEntity(entity, cause, damage);
@@ -29,7 +30,8 @@ public class DamageNMS extends NMS{
 				Damage_v1_16_R3.damageEntity(entity, player, cause, damage);
 				break;
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) Damage_6.damageEntity(entity, player, cause, damage);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 5)) Damage_7.damageEntity(entity, player, cause, damage);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) Damage_6.damageEntity(entity, player, cause, damage);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 2)) Damage_5.damageEntity(entity, player, cause, damage);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 0)) Damage_4.damageEntity(entity, player, cause, damage);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 4)) Damage_3.damageEntity(entity, player, cause, damage);
@@ -44,7 +46,8 @@ public class DamageNMS extends NMS{
 			case 16:
 				return Damage_v1_16_R3.getArrowDamage(entity, arrow);
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) return Damage_10.getArrowDamage(entity, arrow);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 5)) return Damage_11.getArrowDamage(entity, arrow);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) return Damage_10.getArrowDamage(entity, arrow);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 2)) return Damage_9.getArrowDamage(entity, arrow);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 0)) return Damage_8.getArrowDamage(entity, arrow);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 4)) return Damage_7.getArrowDamage(entity, arrow);
@@ -64,7 +67,8 @@ public class DamageNMS extends NMS{
 				Damage_v1_16_R3.updateHealth(entity);
 				break;
 			default:
-				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) Damage_10.updateHealth(entity);
+				if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 5)) Damage_11.updateHealth(entity);
+				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 3)) Damage_10.updateHealth(entity);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 2)) Damage_9.updateHealth(entity);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 20, 0)) Damage_8.updateHealth(entity);
 				else if (isSimilarOrAbove(getVersionNumbers(), 1, 19, 4)) Damage_7.updateHealth(entity);

@@ -2,8 +2,8 @@ package org.ctp.crashapi.compatibility;
 
 import org.bukkit.inventory.ItemStack;
 import org.ctp.crashapi.CrashAPIPlugin;
-import org.ctp.crashapi.item.CustomItemType;
-import org.ctp.crashapi.item.ItemData;
+import org.ctp.crashapi.data.items.CustomItemType;
+import org.ctp.crashapi.data.items.ItemData;
 
 import net.Indyuce.mmoitems.api.Type;
 

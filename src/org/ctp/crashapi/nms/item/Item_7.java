@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.Locale;
 
 import org.bukkit.block.Block;
-import org.ctp.crashapi.item.BlockSound;
+import org.ctp.crashapi.data.BlockSound;
 import org.ctp.crashapi.nms.NMS;
 
 import net.minecraft.sounds.SoundEffect;

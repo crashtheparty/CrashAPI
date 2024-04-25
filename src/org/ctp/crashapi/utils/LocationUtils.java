@@ -6,8 +6,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
-import org.ctp.crashapi.inventory.InventoryData;
-import org.ctp.crashapi.item.MatData;
+import org.ctp.crashapi.data.inventory.InventoryData;
+import org.ctp.crashapi.data.items.MatData;
 
 public class LocationUtils {
 

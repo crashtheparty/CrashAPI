@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.ctp.crashapi.config.CrashConfigurations;
 import org.ctp.crashapi.config.yaml.YamlConfig;
-import org.ctp.crashapi.item.ItemSerialization;
+import org.ctp.crashapi.data.items.ItemSerialization;
 import org.ctp.crashapi.utils.ChatUtils;
 import org.ctp.crashapi.version.PluginVersion;
 

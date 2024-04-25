@@ -1,4 +1,4 @@
-package org.ctp.crashapi.inventory;
+package org.ctp.crashapi.data.inventory;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

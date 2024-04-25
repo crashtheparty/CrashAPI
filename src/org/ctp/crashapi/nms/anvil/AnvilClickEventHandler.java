@@ -1,7 +1,7 @@
 package org.ctp.crashapi.nms.anvil;
 
 import org.bukkit.entity.Player;
-import org.ctp.crashapi.inventory.InventoryData;
+import org.ctp.crashapi.data.inventory.InventoryData;
 
 public interface AnvilClickEventHandler {
 	void onAnvilClick(AnvilClickEvent event);
