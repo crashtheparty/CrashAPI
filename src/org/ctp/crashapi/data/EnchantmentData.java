@@ -25,7 +25,7 @@ public class EnchantmentData {
 	public static final Enchantment RESPIRATION = new EnchantmentData("respiration").getEnchantment();
 	public static final Enchantment SHARPNESS = new EnchantmentData("sharpness").getEnchantment();
 	public static final Enchantment SMITE = new EnchantmentData("smite").getEnchantment();
-	public static final Enchantment SWEEPING_EDGE = new EnchantmentData("sweeping_edge").getEnchantment();
+	public static final Enchantment SWEEPING_EDGE = (new EnchantmentData("sweeping").getEnchantment() == null ? new EnchantmentData("sweeping_edge").getEnchantment() : new EnchantmentData("sweeping").getEnchantment());
 	public static final Enchantment SWIFT_SNEAK = (new EnchantmentData("swift_sneak").getEnchantment() == null ? null : new EnchantmentData("swift_sneak").getEnchantment());
 	
 	private Enchantment enchant;
