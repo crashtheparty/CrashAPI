@@ -27,6 +27,9 @@ public class EnchantmentData {
 	public static final Enchantment SMITE = new EnchantmentData("smite").getEnchantment();
 	public static final Enchantment SWEEPING_EDGE = (new EnchantmentData("sweeping").getEnchantment() == null ? new EnchantmentData("sweeping_edge").getEnchantment() : new EnchantmentData("sweeping").getEnchantment());
 	public static final Enchantment SWIFT_SNEAK = (new EnchantmentData("swift_sneak").getEnchantment() == null ? null : new EnchantmentData("swift_sneak").getEnchantment());
+	public static final Enchantment BREACH = (new EnchantmentData("breach").getEnchantment() == null ? null : new EnchantmentData("breach").getEnchantment());
+	public static final Enchantment DENSITY = (new EnchantmentData("density").getEnchantment() == null ? null : new EnchantmentData("density").getEnchantment());
+	public static final Enchantment WIND_BURST = (new EnchantmentData("wind_burst").getEnchantment() == null ? null : new EnchantmentData("wind_burst").getEnchantment());
 	
 	private Enchantment enchant;
 	private String enchantName;
